@@ -13,8 +13,8 @@ export default function Team() {
     {
       name: 'Patar Mangatur Siringoringo',
       role: 'Komisaris',
-      image: '/images/team-work.jpeg',
-      position: 'center',
+      image: '/images/commissioner-portrait.jpg',
+      position: 'top',
     },
   ];
 
