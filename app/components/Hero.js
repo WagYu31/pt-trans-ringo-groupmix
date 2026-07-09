@@ -95,8 +95,8 @@ export default function Hero() {
             <div className="hero-stat-lbl">Armada Truk Mixer</div>
           </div>
           <div className="hero-stat-col">
-            <div className="hero-stat-val">2 Cabang</div>
-            <div className="hero-stat-lbl">Bekasi & Bandung</div>
+            <div className="hero-stat-val">3 Cabang</div>
+            <div className="hero-stat-lbl">Bekasi, Bandung & Cianjur</div>
           </div>
         </div>
       </div>
