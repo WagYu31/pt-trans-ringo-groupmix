@@ -91,7 +91,7 @@ export default function Hero() {
             <div className="hero-stat-lbl">Kapasitas / Jam</div>
           </div>
           <div className="hero-stat-col">
-            <div className="hero-stat-val">Hino & Isuzu</div>
+            <div className="hero-stat-val">Hino, Isuzu & FAW</div>
             <div className="hero-stat-lbl">Armada Truk Mixer</div>
           </div>
           <div className="hero-stat-col">
