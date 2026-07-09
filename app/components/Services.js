@@ -14,6 +14,9 @@ export default function Services() {
   const [thickness, setThickness] = useState('');
   const [selectedGrade, setSelectedGrade] = useState('K-300');
   const [safetyFactor, setSafetyFactor] = useState(10); // default 10% safety margin
+  const [customerName, setCustomerName] = useState('');
+  const [projectAddress, setProjectAddress] = useState('');
+  const [picPhone, setPicPhone] = useState('');
 
   const services = [
     {
@@ -116,7 +119,12 @@ export default function Services() {
   const handleWhatsAppOrder = () => {
     const message = `Halo TRGMIX, saya tertarik dengan beton ReadyMix Anda.
 
-Saya telah menghitung perkiraan kebutuhan beton saya:
+*Detail Pemesan:*
+1. Nama Pemesan: ${customerName || '-'}
+2. Alamat Proyek: ${projectAddress || '-'}
+3. Nama PIC / No Telf: ${picPhone || '-'}
+
+*Perkiraan Kebutuhan Beton:*
 - Mutu Beton: ${selectedGrade}
 - Ukuran Proyek: ${length || 0}m x ${width || 0}m x ${thickness || 0}m
 - Volume Bersih: ${rawVolume.toFixed(2)} m³
@@ -406,6 +414,43 @@ Mohon kirimkan informasi harga terbaik dan jadwal pengiriman untuk lokasi saya.`
                       </select>
                     </div>
                   </div>
+
+                  <div className="calculator-divider" style={{ margin: '20px 0', borderTop: '1px dashed rgba(255,255,255,0.1)' }}></div>
+                  
+                  <div style={{ marginBottom: '16px' }}>
+                    <h5 style={{ fontSize: '15px', fontWeight: '600', color: 'var(--gold-400)', marginBottom: '12px' }}>Informasi Pemesanan & Pengiriman</h5>
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '16px' }}>
+                    <label>Nama Pemesan</label>
+                    <input
+                      type="text"
+                      placeholder="Masukkan nama pemesan / perusahaan..."
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="input-group-row" style={{ marginBottom: '0' }}>
+                    <div className="form-group">
+                      <label>Nama PIC / No Telf</label>
+                      <input
+                        type="text"
+                        placeholder="Contoh: Pak Budi / 081234..."
+                        value={picPhone}
+                        onChange={(e) => setPicPhone(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group" style={{ flex: '1.5' }}>
+                      <label>Alamat Proyek</label>
+                      <input
+                        type="text"
+                        placeholder="Masukkan alamat lengkap proyek..."
+                        value={projectAddress}
+                        onChange={(e) => setProjectAddress(e.target.value)}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="calculator-results">
@@ -478,15 +523,15 @@ Mohon kirimkan informasi harga terbaik dan jadwal pengiriman untuk lokasi saya.`
                     <button 
                       className="calc-order-btn"
                       onClick={handleWhatsAppOrder}
-                      disabled={!length || !width || !thickness}
+                      disabled={!length || !width || !thickness || !customerName || !projectAddress || !picPhone}
                     >
                       <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}>
                         <path d="M12.031 2c-5.516 0-9.999 4.484-9.999 9.998 0 1.952.562 3.774 1.53 5.32l-1.562 4.682 4.81-1.503a9.92 9.92 0 005.221 1.5c5.516 0 10-4.484 10-9.998C22.031 6.484 17.547 2 12.031 2zm0 1c4.962 0 9 4.038 9 9s-4.038 9-9 9a8.96 8.96 0 01-4.707-1.332l-.337-.197-2.825.882.915-2.744-.216-.345A8.962 8.962 0 013.031 12c0-4.962 4.038-9 9-9zM8.824 7.243c-.22 0-.46.064-.674.195-.31.189-.525.466-.607.781-.197.755.074 1.706.745 2.766.577.914 1.393 1.776 2.378 2.508l.307.227c1.077.787 2.128 1.34 2.984 1.488.309.054.62-.008.877-.174.22-.142.383-.377.46-.662l.332-1.22c.07-.257-.042-.527-.267-.643l-1.464-.757c-.208-.108-.46-.075-.63.08l-.513.47a.382.382 0 01-.482.046 5.864 5.864 0 01-1.63-1.309 6.222 6.222 0 01-1.12-1.602.383.383 0 01.071-.468l.422-.441c.143-.15.18-.372.095-.558L8.232 7.74a.498.498 0 00-.458-.297z" />
                       </svg>
                       Pesan Beton via WhatsApp
                     </button>
-                    {!length || !width || !thickness ? (
-                      <div className="calc-alert-note">Silakan isi Panjang, Lebar, dan Tebal untuk mengaktifkan tombol pemesanan.</div>
+                    {!length || !width || !thickness || !customerName || !projectAddress || !picPhone ? (
+                      <div className="calc-alert-note">Silakan lengkapi ukuran proyek, nama pemesan, alamat, dan nomor/nama PIC untuk melakukan pemesanan.</div>
                     ) : null}
                   </div>
                 </div>
