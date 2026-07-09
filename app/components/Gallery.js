@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 
 const galleryImages = [
@@ -24,21 +24,23 @@ const galleryImages = [
 
 export default function Gallery() {
   const [filter, setFilter] = useState('semua');
-  const [visibleCount, setVisibleCount] = useState(8);
   const [activeIndex, setActiveIndex] = useState(null);
+  const sliderRef = useRef(null);
 
   // Filter images based on selected category
   const filteredImages = filter === 'semua'
     ? galleryImages
     : galleryImages.filter(img => img.category === filter);
 
-  // Reset visible count when filter changes
-  useEffect(() => {
-    setVisibleCount(8);
-  }, [filter]);
-
-  const handleLoadMore = () => {
-    setVisibleCount(prev => Math.min(prev + 8, filteredImages.length));
+  const handleScroll = (direction) => {
+    if (sliderRef.current) {
+      const { scrollLeft, clientWidth } = sliderRef.current;
+      const scrollAmount = direction === 'left' ? -clientWidth : clientWidth;
+      sliderRef.current.scrollTo({
+        left: scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const handlePrev = useCallback((e) => {
@@ -98,42 +100,51 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Gallery Grid */}
-        <div className="gallery-grid">
-          {filteredImages.slice(0, visibleCount).map((img, index) => (
-            <div
-              key={img.id}
-              className="gallery-card glass-card"
-              onClick={() => setActiveIndex(index)}
-            >
-              <div className="gallery-img-wrapper">
-                <Image
-                  src={img.src}
-                  alt={img.title}
-                  width={400}
-                  height={300}
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                />
-                <div className="gallery-hover-overlay">
-                  <div className="gallery-hover-content">
-                    <span className="gallery-zoom-icon">🔍</span>
-                    <span className="gallery-cat-tag">{img.category.toUpperCase()}</span>
-                    <h3 className="gallery-card-title">{img.title}</h3>
+        {/* Gallery Slider */}
+        <div className="gallery-slider-container">
+          <button 
+            className="gallery-nav-btn prev" 
+            onClick={() => handleScroll('left')}
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          
+          <div className="gallery-slider-track" ref={sliderRef}>
+            {filteredImages.map((img, index) => (
+              <div
+                key={img.id}
+                className="gallery-slide-card"
+                onClick={() => setActiveIndex(index)}
+              >
+                <div className="gallery-img-wrapper">
+                  <Image
+                    src={img.src}
+                    alt={img.title}
+                    width={400}
+                    height={300}
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  />
+                  <div className="gallery-hover-overlay">
+                    <div className="gallery-hover-content">
+                      <span className="gallery-zoom-icon">🔍</span>
+                      <span className="gallery-cat-tag">{img.category.toUpperCase()}</span>
+                      <h3 className="gallery-card-title">{img.title}</h3>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Load More Button */}
-        {visibleCount < filteredImages.length && (
-          <div className="gallery-load-more">
-            <button className="btn btn-outline btn-glass-outline" onClick={handleLoadMore}>
-              Lihat Lebih Banyak Gambar 📂
-            </button>
+            ))}
           </div>
-        )}
+
+          <button 
+            className="gallery-nav-btn next" 
+            onClick={() => handleScroll('right')}
+            aria-label="Next slide"
+          >
+            ›
+          </button>
+        </div>
       </div>
 
       {/* Lightbox Modal */}
