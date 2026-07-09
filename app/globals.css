@@ -2858,22 +2858,23 @@ textarea:focus-visible {
 
 .gallery-filter-btn {
   font-family: var(--font-heading);
-  background: var(--surface-glass);
-  border: 1px solid var(--border-subtle);
-  color: var(--gray-300);
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  color: var(--navy-800);
   padding: 10px 24px;
   border-radius: 30px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   min-height: 44px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
 }
 
 .gallery-filter-btn:hover {
-  background: var(--surface-glass-hover);
-  border-color: var(--border-light);
-  color: var(--white);
+  background: rgba(212, 160, 41, 0.05);
+  border-color: var(--gold-400);
+  color: var(--gold-600);
 }
 
 .gallery-filter-btn.active {
