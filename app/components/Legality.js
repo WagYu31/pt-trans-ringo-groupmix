@@ -84,7 +84,7 @@ export default function Legality() {
           </p>
         </div>
 
-        <div className="legality-grid" style={{ marginBottom: '64px' }}>
+        <div className="certifications-grid" style={{ marginBottom: '64px' }}>
           {certifications.map((cert, index) => (
             <div className="legality-card cert-card" key={index}>
               <div className="legality-card-icon" style={{ background: 'rgba(212, 160, 41, 0.12)', color: 'var(--gold-500)' }}>{cert.icon}</div>
