@@ -8,11 +8,13 @@ export default function Team() {
       name: 'Saroha Siringoringo',
       role: 'Direktur',
       image: '/images/director-portrait.jpg',
+      position: 'top',
     },
     {
       name: 'Patar Mangatur Siringoringo',
       role: 'Komisaris',
       image: '/images/team-work.jpeg',
+      position: 'center',
     },
   ];
 
@@ -37,7 +39,7 @@ export default function Team() {
                   alt={member.name}
                   width={140}
                   height={140}
-                  style={{ objectFit: 'cover' }}
+                  style={{ objectFit: 'cover', objectPosition: member.position || 'center' }}
                 />
               </div>
               <h3 className="team-card-name">{member.name}</h3>
