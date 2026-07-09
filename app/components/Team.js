@@ -7,7 +7,7 @@ export default function Team() {
     {
       name: 'Saroha Siringoringo',
       role: 'Direktur',
-      image: '/images/team-photo.jpeg',
+      image: '/images/director-portrait.jpg',
     },
     {
       name: 'Patar Mangatur Siringoringo',
