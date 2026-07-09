@@ -51,8 +51,11 @@ export default function Hero() {
 
       <div className="container">
         <div className="hero-content-executive">
-          <div className="hero-brand-label">
-            PT. TRANS RINGO GROUPMIX
+          <div className="hero-brand-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <span>PT. TRANS RINGO GROUPMIX</span>
+            <span style={{ fontSize: '10px', background: 'rgba(212, 160, 41, 0.15)', border: '1px solid var(--gold-400)', color: 'var(--gold-300)', padding: '2px 10px', borderRadius: '100px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>
+              ★ ISO 9001 &amp; SNI Certified
+            </span>
           </div>
 
           <h1 className="hero-title-modern">

@@ -1,6 +1,37 @@
 'use client';
 
 export default function Legality() {
+  const certifications = [
+    {
+      badge: 'ISO 9001:2015',
+      title: 'Sistem Manajemen Mutu',
+      detail: 'Standardisasi Internasional (Quality Management)',
+      number: 'Sertifikasi Konsistensi Mutu & Layanan',
+      icon: '🏆',
+    },
+    {
+      badge: 'ISO 14001:2015',
+      title: 'Manajemen Lingkungan',
+      detail: 'Pencegahan Polusi & Aspek Dampak Lingkungan',
+      number: 'Sertifikasi Operasional Ramah Lingkungan',
+      icon: '🍃',
+    },
+    {
+      badge: 'ISO 45001:2018',
+      title: 'Sistem K3 Konstruksi',
+      detail: 'Sistem Manajemen Keselamatan & Kesehatan Kerja',
+      number: 'Sertifikasi Keamanan & Keselamatan Kerja',
+      icon: '🛡️',
+    },
+    {
+      badge: 'SNI B1',
+      title: 'Standar Nasional Indonesia',
+      detail: 'Spesifikasi Teknis Beton Struktural & Mutu Khusus',
+      number: 'SNI 2847:2019 & SNI 1974:2011',
+      icon: '🇮🇩',
+    },
+  ];
+
   const documents = [
     {
       icon: '📜',
@@ -43,12 +74,34 @@ export default function Legality() {
   return (
     <section className="section section-dark" id="legalitas">
       <div className="container">
+        
+        {/* ISO & SNI Certification Grid */}
         <div className="section-header">
-          <span className="section-label">📄 Legalitas</span>
-          <h2 className="section-title">Dokumen Legal &<br />Sertifikasi</h2>
+          <span className="section-label">★ Standarisasi Mutu</span>
+          <h2 className="section-title">Sertifikasi &amp; Standar ISO / SNI</h2>
           <p className="section-subtitle">
-            PT. Trans Ringo Groupmix telah memenuhi seluruh persyaratan legalitas dan sertifikasi
-            sebagai perusahaan yang terpercaya dan bertanggung jawab.
+            Seluruh operasional Batching Plant dan manajemen PT. Trans Ringo Groupmix diproduksi dengan standar mutu internasional guna menjamin kepuasan mitra kerja.
+          </p>
+        </div>
+
+        <div className="legality-grid" style={{ marginBottom: '64px' }}>
+          {certifications.map((cert, index) => (
+            <div className="legality-card cert-card" key={index}>
+              <div className="legality-card-icon" style={{ background: 'rgba(212, 160, 41, 0.12)', color: 'var(--gold-500)' }}>{cert.icon}</div>
+              <span className="cert-badge-tag">{cert.badge}</span>
+              <h3 className="legality-card-title">{cert.title}</h3>
+              <p className="legality-card-detail">{cert.detail}</p>
+              <span className="legality-card-number">{cert.number}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Legal Izin & Documents Grid */}
+        <div className="section-header" style={{ marginTop: '30px' }}>
+          <span className="section-label">📄 Legalitas Hukum</span>
+          <h2 className="section-title">Dokumen Legal &amp; Izin Usaha</h2>
+          <p className="section-subtitle">
+            Kepatuhan hukum terhadap seluruh izin usaha dan regulasi pemerintah Indonesia untuk kemitraan bisnis yang aman, profesional, dan tepercaya.
           </p>
         </div>
 
@@ -62,6 +115,7 @@ export default function Legality() {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
