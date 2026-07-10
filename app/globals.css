@@ -2597,7 +2597,7 @@ ul, ol {
 
 .hero-brand-label {
   font-family: var(--font-heading);
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--gold-400);
   letter-spacing: 2px;
@@ -2605,7 +2605,7 @@ ul, ol {
   margin-bottom: 24px;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .hero-title-modern {

@@ -57,7 +57,7 @@ export default function Hero() {
               <span style={{ color: '#206db5', fontWeight: '900' }}>RINGO</span>{' '}
               <span style={{ color: '#db5665', fontWeight: '900' }}>GROUPMIX</span>
             </span>
-            <span style={{ fontSize: '12px', background: 'rgba(212, 160, 41, 0.15)', border: '1px solid var(--gold-400)', color: 'var(--gold-300)', padding: '4px 12px', borderRadius: '100px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '13px', background: 'rgba(212, 160, 41, 0.15)', border: '1px solid var(--gold-400)', color: 'var(--gold-300)', padding: '5px 14px', borderRadius: '100px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>
               ★ ISO 9001 &amp; SNI Certified
             </span>
           </div>
