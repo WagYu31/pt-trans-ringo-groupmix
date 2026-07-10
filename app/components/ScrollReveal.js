@@ -8,8 +8,8 @@ export default function ScrollReveal() {
 
     const observerOptions = {
       root: null,
-      rootMargin: '0px 0px -80px 0px', // Trigger when element is 80px inside the viewport
-      threshold: 0.02,
+      rootMargin: '0px 0px 50px 0px', // Trigger 50px before entering the viewport
+      threshold: 0,
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -24,13 +24,7 @@ export default function ScrollReveal() {
     const observeElements = () => {
       const elements = document.querySelectorAll('.reveal:not(.revealed)');
       elements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        // Only reveal immediately if it is at the very top of the page (above fold)
-        if (rect.bottom < 150) {
-          el.classList.add('revealed');
-        } else {
-          observer.observe(el);
-        }
+        observer.observe(el);
       });
     };
 
