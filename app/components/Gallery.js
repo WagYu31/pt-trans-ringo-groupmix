@@ -24,6 +24,7 @@ const galleryImages = [
 
 export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
   const sliderRef = useRef(null);
 
   // Show all gallery images in the slider
@@ -31,12 +32,21 @@ export default function Gallery() {
 
   const handleScroll = (direction) => {
     if (sliderRef.current) {
-      const { scrollLeft, clientWidth } = sliderRef.current;
-      const scrollAmount = direction === 'left' ? -clientWidth : clientWidth;
-      sliderRef.current.scrollTo({
-        left: scrollLeft + scrollAmount,
-        behavior: 'smooth'
-      });
+      const { scrollLeft, clientWidth, scrollWidth } = sliderRef.current;
+      
+      if (direction === 'right') {
+        const isEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth - 10;
+        sliderRef.current.scrollTo({
+          left: isEnd ? 0 : scrollLeft + clientWidth,
+          behavior: 'smooth'
+        });
+      } else {
+        const isStart = scrollLeft <= 10;
+        sliderRef.current.scrollTo({
+          left: isStart ? scrollWidth : scrollLeft - clientWidth,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
@@ -62,6 +72,25 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
+  // Autoplay functionality
+  useEffect(() => {
+    if (isPaused || activeIndex !== null) return;
+
+    const interval = setInterval(() => {
+      if (sliderRef.current) {
+        const { scrollLeft, clientWidth, scrollWidth } = sliderRef.current;
+        const isEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth - 10;
+        
+        sliderRef.current.scrollTo({
+          left: isEnd ? 0 : scrollLeft + clientWidth,
+          behavior: 'smooth'
+        });
+      }
+    }, 3500); // Auto-scroll every 3.5 seconds
+
+    return () => clearInterval(interval);
+  }, [isPaused, activeIndex]);
+
   return (
     <section className="section section-gradient" id="galeri">
       {/* Ambient background glow */}
@@ -78,7 +107,13 @@ export default function Gallery() {
         </div>
 
         {/* Gallery Slider */}
-        <div className="gallery-slider-container">
+        <div 
+          className="gallery-slider-container"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
           <button 
             className="gallery-nav-btn prev" 
             onClick={() => handleScroll('left')}
