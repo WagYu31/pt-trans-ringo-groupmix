@@ -9,19 +9,19 @@ export default function Contact() {
     bekasi: {
       name: 'Plant Bekasi (Pusat)',
       address: 'Kp. Mareleng, Desa Bojongsari, Kec. Kedungwaringin, Kab. Bekasi, Jawa Barat',
-      mapUrl: 'https://maps.google.com/maps?q=PT.%20Trans%20Ringo%20Group&t=&z=16&ie=UTF8&iwloc=&output=embed',
+      mapUrl: 'https://maps.google.com/maps?q=-6.2681537,107.2562497+(PT.%20Trans%20Ringo%20Group)&t=&z=17&ie=UTF8&iwloc=&output=embed',
       shareUrl: 'https://share.google/RWjTc3gG7EA65Pan5',
     },
     bandung: {
       name: 'Plant Bandung (Cabang)',
       address: 'Jl. Bojong Cibodas, Tanjunglaya, Kec. Rancaekek, Kab. Bandung, Jawa Barat, 40390',
-      mapUrl: 'https://maps.google.com/maps?q=PT.%20Trans%20Ringo%20Group%202&t=&z=16&ie=UTF8&iwloc=&output=embed',
+      mapUrl: 'https://maps.google.com/maps?q=-6.9910863,107.8216306+(PT.%20Trans%20Ringo%20Group%202)&t=&z=17&ie=UTF8&iwloc=&output=embed',
       shareUrl: 'https://share.google/OF1r9GxCg4xPLqSbf',
     },
     cianjur: {
       name: 'Plant Cianjur (Cabang)',
       address: 'Jl. Raya Bandung-Cianjur, Kec. Karangtengah, Kab. Cianjur, Jawa Barat, 43281',
-      mapUrl: 'https://maps.google.com/maps?q=PT.%20TRANS%20RINGO%20GROUP%2C%20Cianjur&t=&z=16&ie=UTF8&iwloc=&output=embed',
+      mapUrl: 'https://maps.google.com/maps?q=-6.8057818,107.1652396+(PT.%20TRANS%20RINGO%20GROUP)&t=&z=17&ie=UTF8&iwloc=&output=embed',
       shareUrl: 'https://share.google/D1pcEc3GOV2HVKGJI',
     }
   };
