@@ -3389,19 +3389,36 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
-   SCROLL REVEAL ANIMATIONS — PT. TRANS RINGO GROUPMIX
+   SCROLL REVEAL ANIMATIONS (SHUTTER / BUKA TUTUP) — PT. TRANS RINGO GROUPMIX
    ========================================================================== */
 
 .reveal {
   opacity: 0;
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity, filter;
-  filter: blur(8px);
+  transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+              clip-path 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, clip-path;
 }
 
-/* Scroll variations */
+/* Shutter Vertical (Buka Tutup Vertikal - dari tengah keluar) */
+.reveal-shutter-y {
+  clip-path: inset(50% 0 50% 0);
+  transform: translateY(30px);
+}
+
+/* Shutter Horizontal (Buka Tutup Horisontal - dari tengah keluar) */
+.reveal-shutter-x {
+  clip-path: inset(0 50% 0 50%);
+  transform: scaleX(0.98);
+}
+
+/* Shutter Inset Card (Buka Tutup Kotak - dari sudut mengecil) */
+.reveal-shutter-inset {
+  clip-path: inset(15% 15% 15% 15% round 12px);
+  transform: scale(0.96) translateY(25px);
+}
+
+/* Fallback / standard variants */
 .reveal-fade-up {
   transform: translateY(50px);
 }
@@ -3426,7 +3443,7 @@ textarea:focus-visible {
 .reveal.revealed {
   opacity: 1;
   transform: translate(0) scale(1);
-  filter: blur(0);
+  clip-path: inset(0% 0% 0% 0% round 0px);
 }
 
 /* Staggered transition delay utility classes */

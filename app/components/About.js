@@ -6,17 +6,17 @@ export default function About() {
   return (
     <section className="section section-gradient" id="tentang">
       <div className="container">
-        <div className="section-header reveal reveal-fade-up">
+        <div className="section-header reveal reveal-shutter-y">
           <span className="section-label">✦ Tentang Kami</span>
           <h2 className="section-title">Mitra Terpercaya Anda dalam<br />Industri Beton & Konstruksi</h2>
           <p className="section-subtitle">
             Berdiri sejak 2024, kami berkomitmen menyediakan produk beton berkualitas tinggi
-            dengan layanan yang handal dan profesional.
+            dengan layanan yang handal and profesional.
           </p>
         </div>
 
         <div className="about-grid">
-          <div className="about-image-wrapper reveal reveal-fade-right">
+          <div className="about-image-wrapper reveal reveal-shutter-inset">
             <div className="about-image">
               <Image
                 src="/images/batching-plant.jpeg"
@@ -32,7 +32,7 @@ export default function About() {
             </div>
           </div>
 
-          <div className="about-content reveal reveal-fade-left">
+          <div className="about-content reveal reveal-shutter-y">
             <h3>Berawal dari Supplier Material, Kini Menjadi Produsen Beton ReadyMix</h3>
             <p>
               PT. Trans Ringo Groupmix bergerak di bidang Supplier, Kontraktor, dan Beton ReadyMix (Beton Siap Jadi).
