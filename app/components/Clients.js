@@ -29,7 +29,7 @@ export default function Clients() {
       <div className="clients-glow-right"></div>
 
       <div className="container">
-        <div className="section-header" style={{ marginBottom: '50px' }}>
+        <div className="section-header reveal reveal-fade-up" style={{ marginBottom: '50px' }}>
           <span className="section-label">✦ Kolaborasi Strategis</span>
           <h2 className="section-title text-larger">Klien &amp; Mitra Terpercaya</h2>
           <p className="section-subtitle subtitle-wider">
@@ -39,56 +39,59 @@ export default function Clients() {
         </div>
 
         {/* Row 1: BUMN Clients (Scroll Left) */}
-        <div className="marquee-label-row">
-          <span className="marquee-group-label">🏛️ INFRASTRUKTUR BUMN</span>
-        </div>
-        <div className="partner-marquee-wrapper wrapper-left">
-          <div className="partner-marquee-track track-left">
-            {/* First Set */}
-            {BumnClients.map((partner, index) => (
-              <div className="partner-logo-card glass-card card-large" key={`bumn-1-${index}`}>
-                <div className="partner-logo-icon icon-large logo-real-container">
-                  <Image
-                    src={partner.src}
-                    alt={`${partner.name} logo`}
-                    width={40}
-                    height={40}
-                    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
-                  />
+        <div className="reveal reveal-fade-right">
+          <div className="marquee-label-row">
+            <span className="marquee-group-label">🏛️ INFRASTRUKTUR BUMN</span>
+          </div>
+          <div className="partner-marquee-wrapper wrapper-left">
+            <div className="partner-marquee-track track-left">
+              {/* First Set */}
+              {BumnClients.map((partner, index) => (
+                <div className="partner-logo-card glass-card card-large" key={`bumn-1-${index}`}>
+                  <div className="partner-logo-icon icon-large logo-real-container">
+                    <Image
+                      src={partner.src}
+                      alt={`${partner.name} logo`}
+                      width={40}
+                      height={40}
+                      style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+                    />
+                  </div>
+                  <div className="partner-logo-info">
+                    <span className="partner-logo-name name-large">{partner.name}</span>
+                    <span className="partner-logo-tag tag-large">{partner.tag}</span>
+                  </div>
                 </div>
-                <div className="partner-logo-info">
-                  <span className="partner-logo-name name-large">{partner.name}</span>
-                  <span className="partner-logo-tag tag-large">{partner.tag}</span>
+              ))}
+              {/* Duplicated Set for Seamless Loop */}
+              {BumnClients.map((partner, index) => (
+                <div className="partner-logo-card glass-card card-large" key={`bumn-2-${index}`}>
+                  <div className="partner-logo-icon icon-large logo-real-container">
+                    <Image
+                      src={partner.src}
+                      alt={`${partner.name} logo`}
+                      width={40}
+                      height={40}
+                      style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+                    />
+                  </div>
+                  <div className="partner-logo-info">
+                    <span className="partner-logo-name name-large">{partner.name}</span>
+                    <span className="partner-logo-tag tag-large">{partner.tag}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
-            {/* Duplicated Set for Seamless Loop */}
-            {BumnClients.map((partner, index) => (
-              <div className="partner-logo-card glass-card card-large" key={`bumn-2-${index}`}>
-                <div className="partner-logo-icon icon-large logo-real-container">
-                  <Image
-                    src={partner.src}
-                    alt={`${partner.name} logo`}
-                    width={40}
-                    height={40}
-                    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
-                  />
-                </div>
-                <div className="partner-logo-info">
-                  <span className="partner-logo-name name-large">{partner.name}</span>
-                  <span className="partner-logo-tag tag-large">{partner.tag}</span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Row 2: Private/Developer Clients (Scroll Right) */}
-        <div className="marquee-label-row" style={{ marginTop: '30px' }}>
-          <span className="marquee-group-label">🏙️ DEVELOPER &amp; SEKTOR SWASTA</span>
-        </div>
-        <div className="partner-marquee-wrapper wrapper-right">
-          <div className="partner-marquee-track track-right">
+        <div className="reveal reveal-fade-left" style={{ marginTop: '30px' }}>
+          <div className="marquee-label-row">
+            <span className="marquee-group-label">🏙️ DEVELOPER &amp; SEKTOR SWASTA</span>
+          </div>
+          <div className="partner-marquee-wrapper wrapper-right">
+            <div className="partner-marquee-track track-right">
             {/* First Set */}
             {PrivateClients.map((partner, index) => (
               <div className="partner-logo-card glass-card card-large" key={`pvt-1-${index}`}>
@@ -127,6 +130,7 @@ export default function Clients() {
             ))}
           </div>
         </div>
+      </div>
 
         {/* Subtext info */}
         <div className="partner-notes" style={{ textAlign: 'center', marginTop: '45px' }}>

@@ -112,7 +112,7 @@ export default function VisionMission() {
   return (
     <section className="section section-dark" id="visi-misi">
       <div className="container">
-        <div className="section-header">
+        <div className="section-header reveal reveal-fade-up">
           <span className="section-label">◆ Visi & Misi</span>
           <h2 className="section-title">Komitmen Kami untuk<br />Masa Depan</h2>
           <p className="section-subtitle">
@@ -121,7 +121,7 @@ export default function VisionMission() {
         </div>
 
         {/* --- VISI HERO BANNER --- */}
-        <div className="visi-hero-card">
+        <div className="visi-hero-card reveal reveal-zoom-in">
           <div className="visi-hero-left">
             <div className="visi-hero-icon-container">
               <TelescopeIcon />
@@ -140,7 +140,7 @@ export default function VisionMission() {
 
         {/* --- MISI SECTION & GRID --- */}
         <div className="misi-section">
-          <div className="misi-header">
+          <div className="misi-header reveal reveal-fade-up">
             <h3 className="misi-section-title">Misi Kami</h3>
             <p className="misi-section-subtitle">Langkah strategis dan pilar utama dalam mewujudkan komitmen masa depan kami.</p>
           </div>
@@ -148,7 +148,7 @@ export default function VisionMission() {
           <div className="misi-grid">
             {missions.map((misi, index) => (
               <div 
-                className={`misi-card ${index === 6 ? 'misi-card-wide' : ''}`} 
+                className={`misi-card ${index === 6 ? 'misi-card-wide' : ''} reveal reveal-fade-up reveal-delay-${(index % 3) * 100 + 100}`} 
                 key={misi.number}
               >
                 <div className="misi-card-top">

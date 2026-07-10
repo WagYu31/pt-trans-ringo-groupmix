@@ -21,7 +21,7 @@ export default function Team() {
   return (
     <section className="section section-gradient" id="tim">
       <div className="container">
-        <div className="section-header">
+        <div className="section-header reveal reveal-fade-up">
           <span className="section-label">👥 Pengurus</span>
           <h2 className="section-title">Tim Kepemimpinan<br />Kami</h2>
           <p className="section-subtitle">
@@ -32,7 +32,7 @@ export default function Team() {
 
         <div className="team-grid">
           {team.map((member, index) => (
-            <div className="team-card" key={index}>
+            <div className={`team-card reveal reveal-fade-up reveal-delay-${index * 150 + 100}`} key={index}>
               <div className="team-card-avatar">
                 <Image
                   src={member.image}

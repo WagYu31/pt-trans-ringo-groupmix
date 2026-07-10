@@ -76,7 +76,7 @@ export default function Legality() {
       <div className="container">
         
         {/* ISO & SNI Certification Grid */}
-        <div className="section-header">
+        <div className="section-header reveal reveal-fade-up">
           <span className="section-label">★ Standarisasi Mutu</span>
           <h2 className="section-title">Sertifikasi &amp; Standar ISO / SNI</h2>
           <p className="section-subtitle">
@@ -86,7 +86,7 @@ export default function Legality() {
 
         <div className="certifications-grid" style={{ marginBottom: '64px' }}>
           {certifications.map((cert, index) => (
-            <div className="legality-card cert-card" key={index}>
+            <div className={`legality-card cert-card reveal reveal-fade-up reveal-delay-${(index % 4) * 100 + 100}`} key={index}>
               <div className="legality-card-icon" style={{ background: 'rgba(212, 160, 41, 0.12)', color: 'var(--gold-500)' }}>{cert.icon}</div>
               <span className="cert-badge-tag">{cert.badge}</span>
               <h3 className="legality-card-title">{cert.title}</h3>
@@ -97,7 +97,7 @@ export default function Legality() {
         </div>
 
         {/* Legal Izin & Documents Grid */}
-        <div className="section-header" style={{ marginTop: '30px' }}>
+        <div className="section-header reveal reveal-fade-up" style={{ marginTop: '30px' }}>
           <span className="section-label">📄 Legalitas Hukum</span>
           <h2 className="section-title">Dokumen Legal &amp; Izin Usaha</h2>
           <p className="section-subtitle">
@@ -107,7 +107,7 @@ export default function Legality() {
 
         <div className="legality-grid">
           {documents.map((doc, index) => (
-            <div className="legality-card" key={index}>
+            <div className={`legality-card reveal reveal-fade-up reveal-delay-${(index % 3) * 100 + 100}`} key={index}>
               <div className="legality-card-icon">{doc.icon}</div>
               <h3 className="legality-card-title">{doc.title}</h3>
               <p className="legality-card-detail">{doc.detail}</p>

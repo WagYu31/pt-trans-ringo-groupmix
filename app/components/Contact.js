@@ -58,7 +58,7 @@ export default function Contact() {
   return (
     <section className="section section-light" id="kontak">
       <div className="container">
-        <div className="section-header">
+        <div className="section-header reveal reveal-fade-up">
           <span className="section-label section-label-dark">📬 Kontak & Lokasi</span>
           <h2 className="section-title section-title-dark">Hubungi Kami</h2>
           <p className="section-subtitle section-subtitle-dark">
@@ -67,7 +67,7 @@ export default function Contact() {
         </div>
 
         <div className="contact-grid">
-          <div className="contact-info-panel">
+          <div className="contact-info-panel reveal reveal-fade-right">
             {/* Cabang Selector */}
             <div className="branch-selector-container">
               <h4 className="branch-title">Lokasi Batching Plant / Cabang:</h4>
@@ -130,7 +130,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="contact-map">
+          <div className="contact-map reveal reveal-fade-left">
             <div className="map-badge">Live Map: {currentBranch.name}</div>
             <iframe
               src={currentBranch.mapUrl}

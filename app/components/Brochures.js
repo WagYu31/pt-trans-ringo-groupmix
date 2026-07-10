@@ -33,7 +33,7 @@ export default function Brochures() {
       <div className="legality-bg-gradient"></div>
       
       <div className="container">
-        <div className="section-header">
+        <div className="section-header reveal reveal-fade-up">
           <span className="section-label">📂 Media & Brosur</span>
           <h2 className="section-title">Dokumen & Brosur Resmi</h2>
           <p className="section-subtitle">
@@ -42,9 +42,9 @@ export default function Brochures() {
         </div>
 
         <div className="brochures-grid">
-          {brochures.map((item) => (
+          {brochures.map((item, index) => (
             <div 
-              className="brochure-card glass-card" 
+              className={`brochure-card glass-card reveal reveal-fade-up reveal-delay-${index * 150 + 100}`} 
               key={item.id}
               onClick={() => setActiveImage(item)}
             >

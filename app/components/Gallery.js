@@ -97,7 +97,7 @@ export default function Gallery() {
       <div className="gallery-ambient-glow"></div>
 
       <div className="container">
-        <div className="section-header">
+        <div className="section-header reveal reveal-fade-up">
           <span className="section-label">✦ Dokumentasi Kami</span>
           <h2 className="section-title">Galeri Proyek &amp; Kegiatan</h2>
           <p className="section-subtitle">
@@ -108,7 +108,7 @@ export default function Gallery() {
 
         {/* Gallery Slider */}
         <div 
-          className="gallery-slider-container"
+          className="gallery-slider-container reveal reveal-zoom-in"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}

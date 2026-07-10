@@ -165,7 +165,7 @@ Mohon kirimkan informasi harga terbaik dan jadwal pengiriman untuk lokasi saya.`
   return (
     <section className="section section-light" id="layanan">
       <div className="container">
-        <div className="section-header">
+        <div className="section-header reveal reveal-fade-up">
           <span className="section-label section-label-dark">★ Layanan Kami</span>
           <h2 className="section-title section-title-dark">Solusi Lengkap untuk<br />Kebutuhan Konstruksi Anda</h2>
           <p className="section-subtitle section-subtitle-dark">
@@ -174,7 +174,7 @@ Mohon kirimkan informasi harga terbaik dan jadwal pengiriman untuk lokasi saya.`
         </div>
 
         {/* Tab Buttons */}
-        <div className="tabs-container">
+        <div className="tabs-container reveal reveal-fade-up">
           <div className="services-tabs">
             <button 
               className={`tab-btn ${activeTab === 'services' ? 'active' : ''}`}
@@ -205,7 +205,7 @@ Mohon kirimkan informasi harga terbaik dan jadwal pengiriman untuk lokasi saya.`
           <div className="services-grid">
             {services.map((service, index) => (
               <div 
-                className="service-card" 
+                className={`service-card reveal reveal-fade-up reveal-delay-${index * 150 + 100}`}
                 key={index}
                 onClick={() => handleServiceAction(service)}
               >

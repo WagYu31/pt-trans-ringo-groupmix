@@ -11,10 +11,12 @@ import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import ScrollReveal from './components/ScrollReveal';
 
 export default function Home() {
   return (
     <>
+      <ScrollReveal />
       <Navbar />
       <main>
         <Hero />
