@@ -9,17 +9,20 @@ export default function Contact() {
     bekasi: {
       name: 'Plant Bekasi (Pusat)',
       address: 'Kp. Mareleng, Desa Bojongsari, Kec. Kedungwaringin, Kab. Bekasi, Jawa Barat',
-      mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15861.851694040508!2d107.24!3d-6.28!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698fd447ec153f%3A0xc4805bb5f92ff48f!2sKedungwaringin%2C%20Bekasi%20Regency%2C%20West%20Java!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid',
+      mapUrl: 'https://maps.google.com/maps?q=PT.%20Trans%20Ringo%20Group&t=&z=16&ie=UTF8&iwloc=&output=embed',
+      shareUrl: 'https://share.google/RWjTc3gG7EA65Pan5',
     },
     bandung: {
       name: 'Plant Bandung (Cabang)',
       address: 'Jl. Bojong Cibodas, Tanjunglaya, Kec. Rancaekek, Kab. Bandung, Jawa Barat, 40390',
-      mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.12351239841!2d107.78!3d-6.95!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c26fc49f506b%3A0x6bde1c713b190f84!2sRancaekek%2C%20Bandung%20Regency%2C%20West%20Java!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid',
+      mapUrl: 'https://maps.google.com/maps?q=PT.%20Trans%20Ringo%20Group%202&t=&z=16&ie=UTF8&iwloc=&output=embed',
+      shareUrl: 'https://share.google/OF1r9GxCg4xPLqSbf',
     },
     cianjur: {
       name: 'Plant Cianjur (Cabang)',
       address: 'Jl. Raya Bandung-Cianjur, Kec. Karangtengah, Kab. Cianjur, Jawa Barat, 43281',
-      mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15849.791244342735!2d107.14!3d-6.82!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6840d216f457ff%3A0x401e8f1fc28da70!2sCianjur%2C%20Cianjur%20Regency%2C%20West%20Java!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid',
+      mapUrl: 'https://maps.google.com/maps?q=PT.%20TRANS%20RINGO%20GROUP%2C%20Cianjur&t=&z=16&ie=UTF8&iwloc=&output=embed',
+      shareUrl: 'https://share.google/D1pcEc3GOV2HVKGJI',
     }
   };
 
@@ -94,7 +97,7 @@ export default function Contact() {
                 <h5 className="active-branch-name">{currentBranch.name}</h5>
                 <p className="active-branch-address">{currentBranch.address}</p>
                 <a 
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(currentBranch.address)}`}
+                  href={currentBranch.shareUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="branch-maps-link"
