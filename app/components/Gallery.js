@@ -23,14 +23,11 @@ const galleryImages = [
 ];
 
 export default function Gallery() {
-  const [filter, setFilter] = useState('semua');
   const [activeIndex, setActiveIndex] = useState(null);
   const sliderRef = useRef(null);
 
-  // Filter images based on selected category
-  const filteredImages = filter === 'semua'
-    ? galleryImages
-    : galleryImages.filter(img => img.category === filter);
+  // Show all gallery images in the slider
+  const filteredImages = galleryImages;
 
   const handleScroll = (direction) => {
     if (sliderRef.current) {
@@ -65,13 +62,6 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
-  const categories = [
-    { value: 'semua', label: 'Semua Foto' },
-    { value: 'produksi', label: 'Produksi' },
-    { value: 'armada', label: 'Armada' },
-    { value: 'proyek', label: 'Proyek' },
-  ];
-
   return (
     <section className="section section-gradient" id="galeri">
       {/* Ambient background glow */}
@@ -85,19 +75,6 @@ export default function Gallery() {
             Kumpulan dokumentasi foto operasional batching plant, kesiapan armada truk mixer, 
             serta pengerjaan pengecoran di berbagai proyek di lapangan.
           </p>
-        </div>
-
-        {/* Category Filters */}
-        <div className="gallery-filters">
-          {categories.map((cat) => (
-            <button
-              key={cat.value}
-              className={`gallery-filter-btn ${filter === cat.value ? 'active' : ''}`}
-              onClick={() => setFilter(cat.value)}
-            >
-              {cat.label}
-            </button>
-          ))}
         </div>
 
         {/* Gallery Slider */}
