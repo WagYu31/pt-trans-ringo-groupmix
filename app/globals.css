@@ -3402,7 +3402,7 @@ textarea:focus-visible {
 
 /* Shutter Vertical (Buka Tutup Vertikal - dari tengah keluar) */
 .reveal-shutter-y {
-  clip-path: inset(50% 0 50% 0);
+  clip-path: inset(50% 0% 50% 0%);
   transform: translateY(30px);
 }
 
@@ -3412,7 +3412,7 @@ textarea:focus-visible {
 
 /* Shutter Horizontal (Buka Tutup Horisontal - dari tengah keluar) */
 .reveal-shutter-x {
-  clip-path: inset(0 50% 0 50%);
+  clip-path: inset(0% 50% 0% 50%);
   transform: scaleX(0.98);
 }
 
