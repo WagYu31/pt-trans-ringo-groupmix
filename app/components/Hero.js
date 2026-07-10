@@ -53,11 +53,11 @@ export default function Hero() {
         <div className="hero-content-executive">
           <div className="hero-brand-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <span>
-              <span style={{ color: '#2c935c', fontWeight: '800' }}>PT. TRANS</span>{' '}
-              <span style={{ color: '#206db5', fontWeight: '800' }}>RINGO</span>{' '}
-              <span style={{ color: '#db5665', fontWeight: '800' }}>GROUPMIX</span>
+              <span style={{ color: '#2c935c', fontWeight: '900' }}>PT. TRANS</span>{' '}
+              <span style={{ color: '#206db5', fontWeight: '900' }}>RINGO</span>{' '}
+              <span style={{ color: '#db5665', fontWeight: '900' }}>GROUPMIX</span>
             </span>
-            <span style={{ fontSize: '10px', background: 'rgba(212, 160, 41, 0.15)', border: '1px solid var(--gold-400)', color: 'var(--gold-300)', padding: '2px 10px', borderRadius: '100px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '12px', background: 'rgba(212, 160, 41, 0.15)', border: '1px solid var(--gold-400)', color: 'var(--gold-300)', padding: '4px 12px', borderRadius: '100px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>
               ★ ISO 9001 &amp; SNI Certified
             </span>
           </div>
