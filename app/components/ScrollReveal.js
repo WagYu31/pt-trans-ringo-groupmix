@@ -8,26 +8,25 @@ export default function ScrollReveal() {
 
     const observerOptions = {
       root: null,
-      rootMargin: '0px 0px -10% 0px', // Triggers when 10% of the element is visible
-      threshold: 0.05,
+      rootMargin: '0px 0px -80px 0px', // Trigger when element is 80px inside the viewport
+      threshold: 0.02,
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
-          // Stop observing once revealed to boost scrolling performance
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
     const observeElements = () => {
-      const elements = document.querySelectorAll('.reveal');
+      const elements = document.querySelectorAll('.reveal:not(.revealed)');
       elements.forEach((el) => {
         const rect = el.getBoundingClientRect();
-        // If the element is already in or above the initial viewport, reveal immediately
-        if (rect.top < window.innerHeight) {
+        // Only reveal immediately if it is at the very top of the page (above fold)
+        if (rect.bottom < 150) {
           el.classList.add('revealed');
         } else {
           observer.observe(el);
@@ -35,10 +34,8 @@ export default function ScrollReveal() {
       });
     };
 
-    // Run observation on mount
     observeElements();
 
-    // Re-run observation if Next.js dynamically updates or re-renders the DOM tree
     const mutationObserver = new MutationObserver(() => {
       observeElements();
     });
