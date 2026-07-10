@@ -3406,16 +3406,28 @@ textarea:focus-visible {
   transform: translateY(30px);
 }
 
+.reveal-shutter-y.revealed {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
 /* Shutter Horizontal (Buka Tutup Horisontal - dari tengah keluar) */
 .reveal-shutter-x {
   clip-path: inset(0 50% 0 50%);
   transform: scaleX(0.98);
 }
 
+.reveal-shutter-x.revealed {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
 /* Shutter Inset Card (Buka Tutup Kotak - dari sudut mengecil) */
 .reveal-shutter-inset {
-  clip-path: inset(15% 15% 15% 15% round 12px);
+  clip-path: inset(15% 15% 15% 15% round 16px);
   transform: scale(0.96) translateY(25px);
+}
+
+.reveal-shutter-inset.revealed {
+  clip-path: inset(0% 0% 0% 0% round 16px);
 }
 
 /* Fallback / standard variants */
@@ -3443,7 +3455,6 @@ textarea:focus-visible {
 .reveal.revealed {
   opacity: 1;
   transform: translate(0) scale(1);
-  clip-path: inset(0% 0% 0% 0% round 0px);
 }
 
 /* Staggered transition delay utility classes */
