@@ -54,7 +54,7 @@ export default function Brochures() {
                   alt={item.title}
                   width={380}
                   height={500}
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  style={{ objectFit: 'contain', width: '100%', height: '100%' }}
                 />
                 <div className="brochure-hover-overlay">
                   <span className="zoom-icon">🔍</span>

@@ -215,7 +215,7 @@ Mohon kirimkan informasi harga terbaik dan jadwal pengiriman untuk lokasi saya.`
                     alt={service.title}
                     width={400}
                     height={220}
-                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
                   />
                   <div className="service-card-image-overlay"></div>
                 </div>
