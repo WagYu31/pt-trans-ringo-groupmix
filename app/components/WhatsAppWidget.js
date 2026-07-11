@@ -55,7 +55,7 @@ export default function WhatsAppWidget() {
     if (!validateForm()) return;
 
     // Official Admin Number (Indonesian code prefix 62)
-    const adminPhoneNumber = '6285283281858'; 
+    const adminPhoneNumber = '6282122925850'; 
 
     const serviceLabel = formData.service;
     const concreteInfo = formData.service === 'Pemesanan Beton ReadyMix' && formData.concreteGrade

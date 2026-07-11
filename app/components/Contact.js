@@ -38,8 +38,8 @@ export default function Contact() {
     {
       icon: '📞',
       label: 'Telepon & WhatsApp',
-      value: '0852-8328-1858',
-      link: 'https://api.whatsapp.com/send?phone=6285283281858',
+      value: '0821-2292-5850',
+      link: 'https://api.whatsapp.com/send?phone=6282122925850',
     },
     {
       icon: '📸',
