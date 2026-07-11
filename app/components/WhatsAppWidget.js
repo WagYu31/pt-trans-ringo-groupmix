@@ -121,35 +121,35 @@ Mohon informasi harga terbaru, estimasi, dan ketersediaan armada. Terima kasih!`
         aria-label="Hubungi kami lewat WhatsApp"
         title="Hubungi Kami"
       >
-        {isOpen ? (
-          <span className="wa-trigger-close-icon">×</span>
-        ) : (
-          <svg viewBox="0 0 100 80" width="46" height="38" className="wa-agent-svg">
-            {/* SPEECH BUBBLE */}
-            <path d="M25 15 C13 15, 5 22, 5 32 C5 38, 9 44, 15 47 L12 55 L22 51 C23 51, 24 51, 25 51 C37 51, 45 44, 45 32 C45 22, 37 15, 25 15 Z" fill="#fff" stroke="#0f264c" strokeWidth="3" strokeLinejoin="round" />
-            <circle cx="17" cy="32" r="2.5" fill="#3b82f6" />
-            <circle cx="25" cy="32" r="2.5" fill="#3b82f6" />
-            <circle cx="33" cy="32" r="2.5" fill="#3b82f6" />
+        <svg viewBox="0 0 100 80" width="80" height="64" className="wa-agent-svg">
+          {/* SPEECH BUBBLE - only visible if NOT open */}
+          {!isOpen && (
+            <>
+              <path d="M25 15 C13 15, 5 22, 5 32 C5 38, 9 44, 15 47 L12 55 L22 51 C23 51, 24 51, 25 51 C37 51, 45 44, 45 32 C45 22, 37 15, 25 15 Z" fill="#fff" stroke="#0f264c" strokeWidth="3" strokeLinejoin="round" />
+              <circle cx="17" cy="32" r="2.5" fill="#3b82f6" />
+              <circle cx="25" cy="32" r="2.5" fill="#3b82f6" />
+              <circle cx="33" cy="32" r="2.5" fill="#3b82f6" />
+            </>
+          )}
 
-            {/* CUSTOMER SUPPORT AGENT */}
-            <path d="M60 42 C60 26, 92 26, 92 42" fill="#a0522d" stroke="#0f264c" strokeWidth="3" />
-            <path d="M52 75 C52 63, 100 63, 100 75 Z" fill="#fff" stroke="#0f264c" strokeWidth="3" strokeLinejoin="round" />
-            <rect x="71" y="52" width="10" height="10" fill="#fed7aa" stroke="#0f264c" strokeWidth="3" />
-            <circle cx="76" cy="42" r="16" fill="#fed7aa" stroke="#0f264c" strokeWidth="3" />
-            <path d="M60 38 C64 26, 88 26, 92 38 C88 32, 64 32, 60 38 Z" fill="#a0522d" stroke="#0f264c" strokeWidth="3" />
-            <circle cx="70" cy="41" r="2" fill="#0f264c" />
-            <circle cx="82" cy="41" r="2" fill="#0f264c" />
-            <path d="M72 47 Q76 51, 80 47" fill="none" stroke="#0f264c" strokeWidth="2" strokeLinecap="round" />
-            <path d="M71 63 L76 70 L81 63" fill="none" stroke="#0f264c" strokeWidth="3" strokeLinecap="round" />
+          {/* CUSTOMER SUPPORT AGENT (always visible) */}
+          <path d="M60 42 C60 26, 92 26, 92 42" fill="#a0522d" stroke="#0f264c" strokeWidth="3" />
+          <path d="M52 75 C52 63, 100 63, 100 75 Z" fill="#fff" stroke="#0f264c" strokeWidth="3" strokeLinejoin="round" />
+          <rect x="71" y="52" width="10" height="10" fill="#fed7aa" stroke="#0f264c" strokeWidth="3" />
+          <circle cx="76" cy="42" r="16" fill="#fed7aa" stroke="#0f264c" strokeWidth="3" />
+          <path d="M60 38 C64 26, 88 26, 92 38 C88 32, 64 32, 60 38 Z" fill="#a0522d" stroke="#0f264c" strokeWidth="3" />
+          <circle cx="70" cy="41" r="2" fill="#0f264c" />
+          <circle cx="82" cy="41" r="2" fill="#0f264c" />
+          <path d="M72 47 Q76 51, 80 47" fill="none" stroke="#0f264c" strokeWidth="2" strokeLinecap="round" />
+          <path d="M71 63 L76 70 L81 63" fill="none" stroke="#0f264c" strokeWidth="3" strokeLinecap="round" />
 
-            {/* Headset */}
-            <path d="M60 42 C60 21, 92 21, 92 42" fill="none" stroke="#3b82f6" strokeWidth="3.5" strokeLinecap="round" />
-            <rect x="57" y="38" width="5" height="12" rx="2.5" fill="#3b82f6" stroke="#0f264c" strokeWidth="3" />
-            <rect x="90" y="38" width="5" height="12" rx="2.5" fill="#3b82f6" stroke="#0f264c" strokeWidth="3" />
-            <path d="M62 47 L70 51" fill="none" stroke="#0f264c" strokeWidth="2.5" strokeLinecap="round" />
-            <circle cx="71" cy="51" r="1.5" fill="#0f264c" />
-          </svg>
-        )}
+          {/* Headset */}
+          <path d="M60 42 C60 21, 92 21, 92 42" fill="none" stroke="#3b82f6" strokeWidth="3.5" strokeLinecap="round" />
+          <rect x="57" y="38" width="5" height="12" rx="2.5" fill="#3b82f6" stroke="#0f264c" strokeWidth="3" />
+          <rect x="90" y="38" width="5" height="12" rx="2.5" fill="#3b82f6" stroke="#0f264c" strokeWidth="3" />
+          <path d="M62 47 L70 51" fill="none" stroke="#0f264c" strokeWidth="2.5" strokeLinecap="round" />
+          <circle cx="71" cy="51" r="1.5" fill="#0f264c" />
+        </svg>
         {!isOpen && <span className="wa-trigger-pulse"></span>}
       </button>
 
