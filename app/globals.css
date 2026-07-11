@@ -3481,13 +3481,13 @@ textarea:focus-visible {
 
 /* Floating Trigger Button */
 .wa-trigger-btn {
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-  color: var(--white);
-  border: none;
-  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4), 0 0 0 1px rgba(37, 211, 102, 0.1);
+  background: var(--white);
+  color: var(--navy-900);
+  border: 1px solid rgba(15, 38, 76, 0.08);
+  box-shadow: 0 8px 24px rgba(15, 38, 76, 0.12);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3498,12 +3498,13 @@ textarea:focus-visible {
 }
 
 .wa-trigger-btn:hover {
-  transform: scale(1.08) rotate(5deg);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 12px 30px rgba(15, 38, 76, 0.18);
 }
 
 .wa-trigger-btn.active {
   background: var(--navy-900);
+  color: var(--white);
   box-shadow: 0 4px 12px rgba(10, 25, 47, 0.3);
 }
 
@@ -3523,7 +3524,7 @@ textarea:focus-visible {
   right: 0;
   bottom: 0;
   border-radius: 50%;
-  border: 2px solid #25d366;
+  border: 2px solid #3b82f6;
   animation: wa-pulse 2s infinite;
   opacity: 0;
   pointer-events: none;
