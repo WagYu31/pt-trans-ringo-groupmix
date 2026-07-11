@@ -2798,7 +2798,7 @@ textarea:focus-visible {
 /* Floating Scroll-to-Top Button */
 .scroll-to-top {
   position: fixed;
-  bottom: 32px;
+  bottom: 104px;
   right: 32px;
   width: 48px;
   height: 48px;
@@ -3466,4 +3466,434 @@ textarea:focus-visible {
 .reveal-delay-600 { transition-delay: 600ms; }
 .reveal-delay-700 { transition-delay: 700ms; }
 .reveal-delay-800 { transition-delay: 800ms; }
+
+/* ==========================================================================
+   WHATSAPP FLOATING SUPPORT WIDGET STYLES
+   ========================================================================== */
+
+.wa-widget-wrapper {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1001;
+  font-family: inherit;
+}
+
+/* Floating Trigger Button */
+.wa-trigger-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: var(--white);
+  border: none;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4), 0 0 0 1px rgba(37, 211, 102, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  z-index: 1002;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.wa-trigger-btn:hover {
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+.wa-trigger-btn.active {
+  background: var(--navy-900);
+  box-shadow: 0 4px 12px rgba(10, 25, 47, 0.3);
+}
+
+.wa-trigger-close-icon {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 300;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+/* Pulsing effect when closed */
+.wa-trigger-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  border: 2px solid #25d366;
+  animation: wa-pulse 2s infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Tooltip Bubble */
+.wa-tooltip-bubble {
+  position: absolute;
+  bottom: 72px;
+  right: 0;
+  width: 280px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  animation: wa-bounce-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1001;
+}
+
+@keyframes wa-bounce-in {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.wa-tooltip-body {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.wa-tooltip-avatar {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-tooltip-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.wa-tooltip-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-900);
+  line-height: 1.3;
+}
+
+.wa-tooltip-desc {
+  font-size: 11px;
+  color: var(--navy-400);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.wa-tooltip-close {
+  background: none;
+  border: none;
+  color: var(--navy-300);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  align-self: flex-start;
+  transition: color 0.2s;
+  line-height: 1;
+  margin-top: -4px;
+}
+
+.wa-tooltip-close:hover {
+  color: var(--navy-900);
+}
+
+.wa-tooltip-arrow {
+  position: absolute;
+  bottom: -6px;
+  right: 24px;
+  width: 12px;
+  height: 12px;
+  background: var(--white);
+  transform: rotate(45deg);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* Chat Form Card */
+.wa-form-card {
+  position: absolute;
+  bottom: 72px;
+  right: 0;
+  width: 360px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(10, 25, 47, 0.15), 0 0 1px rgba(10, 25, 47, 0.1);
+  overflow: hidden;
+  z-index: 1001;
+  animation: wa-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes wa-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Card Header */
+.wa-form-header {
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 100%);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wa-form-agent-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wa-form-avatar-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wa-form-avatar-emoji {
+  font-size: 22px;
+}
+
+.wa-form-online-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #25d366;
+  border: 2px solid var(--navy-900);
+}
+
+.wa-form-agent-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.wa-form-agent-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.3px;
+}
+
+.wa-form-agent-status {
+  font-size: 11px;
+  color: var(--gold-400);
+  font-weight: 500;
+}
+
+.wa-form-close-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.wa-form-close-btn:hover {
+  color: var(--white);
+}
+
+.wa-form-accent-bar {
+  height: 3px;
+  background: linear-gradient(to right, var(--gold-500), var(--gold-400));
+}
+
+/* Form Body */
+.wa-form-body {
+  padding: 20px;
+  max-height: 460px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+/* Custom Scrollbar for Form Body */
+.wa-form-body::-webkit-scrollbar {
+  width: 6px;
+}
+.wa-form-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+}
+.wa-form-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+.wa-form-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.wa-form-intro {
+  font-size: 12px;
+  color: var(--navy-400);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed rgba(10, 25, 47, 0.1);
+}
+
+.wa-form-group {
+  margin-bottom: 16px;
+}
+
+.wa-form-group-conditional {
+  animation: wa-slide-down-cond 0.3s ease-out;
+}
+
+@keyframes wa-slide-down-cond {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wa-form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy-900);
+  margin-bottom: 6px;
+}
+
+.wa-form-group label .req {
+  color: #e53e3e;
+  margin-left: 2px;
+}
+
+.wa-form-group input,
+.wa-form-group select,
+.wa-form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(10, 25, 47, 0.15);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--navy-900);
+  background: var(--white);
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.wa-form-group input:focus,
+.wa-form-group select:focus,
+.wa-form-group textarea:focus {
+  outline: none;
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px rgba(212, 160, 41, 0.1);
+}
+
+.wa-form-group input.input-error,
+.wa-form-group select.input-error,
+.wa-form-group textarea.input-error {
+  border-color: #e53e3e;
+  background-color: #fffaf9;
+}
+
+.wa-error-text {
+  display: block;
+  font-size: 11px;
+  color: #e53e3e;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Submit Button styling */
+.wa-form-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+  margin-top: 8px;
+}
+
+.wa-form-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.35);
+  background: linear-gradient(135deg, #20ba5a 0%, #0f7a6e 100%);
+}
+
+.wa-btn-icon {
+  display: flex;
+  align-items: center;
+}
+
+.wa-form-footer-disclaimer {
+  font-size: 10px;
+  color: var(--navy-300);
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(10, 25, 47, 0.05);
+}
+
+/* Media Queries for Responsive Placement */
+@media (max-width: 576px) {
+  .wa-widget-wrapper {
+    bottom: 24px;
+    right: 24px;
+  }
+  .scroll-to-top {
+    bottom: 96px;
+    right: 24px;
+  }
+  .wa-form-card {
+    width: calc(100vw - 48px);
+    max-height: 80vh;
+    bottom: 68px;
+  }
+  .wa-form-body {
+    max-height: calc(80vh - 160px);
+  }
+}
+
 

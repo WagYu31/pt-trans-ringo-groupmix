@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollReveal from './components/ScrollReveal';
+import WhatsAppWidget from './components/WhatsAppWidget';
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WhatsAppWidget />
     </>
   );
 }
