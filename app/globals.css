@@ -94,6 +94,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  overflow-x: hidden;
 }
 
 body {
@@ -2726,6 +2727,18 @@ ul, ol {
 
 /* Responsive Custom Rules */
 @media (max-width: 768px) {
+  .hero-brand-label {
+    font-size: 15px;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .hero-brand-label span:nth-child(2) {
+    font-size: 11px !important;
+    padding: 3px 10px !important;
+  }
+  .hero-title-modern {
+    font-size: clamp(28px, 8vw, 42px);
+  }
   .hero-stats-horizontal {
     grid-template-columns: 1fr;
     gap: 20px;
