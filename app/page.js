@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import VideoProfile from './components/VideoProfile';
 import VisionMission from './components/VisionMission';
 import Services from './components/Services';
 import Team from './components/Team';
@@ -21,6 +22,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <VideoProfile />
         <VisionMission />
         <Services />
         <Team />
@@ -35,3 +37,4 @@ export default function Home() {
     </>
   );
 }
+
