@@ -134,13 +134,25 @@ export default function Gallery() {
                 onClick={() => setActiveIndex(index)}
               >
                 <div className="gallery-img-wrapper">
-                  <Image
-                    src={img.src}
-                    alt={img.title}
-                    width={400}
-                    height={300}
-                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                  />
+                  {img.type === 'video' ? (
+                    <video
+                      src={img.videoSrc}
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                      preload="metadata"
+                      style={{ objectFit: 'cover', width: '100%', height: '100%', display: 'block' }}
+                    />
+                  ) : (
+                    <Image
+                      src={img.src}
+                      alt={img.title}
+                      width={400}
+                      height={300}
+                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                    />
+                  )}
                   <div className="gallery-hover-overlay">
                     <div className="gallery-hover-content">
                       <span className="gallery-zoom-icon">{img.type === 'video' ? '▶' : '🔍'}</span>
