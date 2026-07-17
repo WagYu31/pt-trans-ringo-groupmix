@@ -4,6 +4,10 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 
 const galleryImages = [
+  { id: 'v1', src: '/images/gallery/video-activity-1.png', videoSrc: '/videos/activity-1.mp4', type: 'video', category: 'kegiatan', title: 'Aktivitas Harian Loader', desc: 'Pengisian material alam agregat ke hopper batching plant menggunakan wheel loader.' },
+  { id: 'v2', src: '/images/gallery/video-activity-2.png', videoSrc: '/videos/activity-2.mp4', type: 'video', category: 'kegiatan', title: 'Loading Beton ke Truk Mixer', desc: 'Proses pengisian beton ReadyMix segar dari mixer batching plant ke dalam armada truk mixer.' },
+  { id: 'v3', src: '/images/gallery/video-zoomlion.png', videoSrc: '/videos/zoomlion.mp4', type: 'video', category: 'alat berat', title: 'Serah Terima Ekskavator Zoomlion', desc: 'Serah terima dan kesiapan operasional alat berat ekskavator baru untuk mendukung proyek kontraktor.' },
+  { id: 'v4', src: '/images/gallery/video-night-op.png', videoSrc: '/videos/night-op.mp4', type: 'video', category: 'kegiatan', title: 'Operasional Malam Hari', desc: 'Aktivitas pengolahan dan loading material pada malam hari demi mengejar target proyek tepat waktu.' },
   { id: 1, src: '/images/gallery/gallery-1.jpeg', category: 'produksi', title: 'Operasional Batching Plant', desc: 'Aktivitas pengolahan bahan baku beton di batching plant modern.' },
   { id: 2, src: '/images/gallery/gallery-2.jpeg', category: 'armada', title: 'Armada Truk Mixer', desc: 'Barisan truk mixer siap mendistribusikan beton siap pakai ke lokasi proyek.' },
   { id: 3, src: '/images/gallery/gallery-3.jpeg', category: 'proyek', title: 'Proyek Pengecoran Jalan', desc: 'Proses perataan beton segar untuk rigid pavement jalan raya.' },
@@ -139,7 +143,7 @@ export default function Gallery() {
                   />
                   <div className="gallery-hover-overlay">
                     <div className="gallery-hover-content">
-                      <span className="gallery-zoom-icon">🔍</span>
+                      <span className="gallery-zoom-icon">{img.type === 'video' ? '▶' : '🔍'}</span>
                       <span className="gallery-cat-tag">{img.category.toUpperCase()}</span>
                       <h3 className="gallery-card-title">{img.title}</h3>
                     </div>
@@ -173,11 +177,21 @@ export default function Gallery() {
             </button>
 
             <div className="lightbox-image-container">
-              <img
-                src={filteredImages[activeIndex].src}
-                alt={filteredImages[activeIndex].title}
-                className="lightbox-main-img"
-              />
+              {filteredImages[activeIndex].type === 'video' ? (
+                <video
+                  src={filteredImages[activeIndex].videoSrc}
+                  className="lightbox-main-video"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={filteredImages[activeIndex].src}
+                  alt={filteredImages[activeIndex].title}
+                  className="lightbox-main-img"
+                />
+              )}
             </div>
 
             {/* Right navigation arrow */}
@@ -193,15 +207,27 @@ export default function Gallery() {
                 <h4 className="lightbox-title">{filteredImages[activeIndex].title}</h4>
                 <p className="lightbox-desc">{filteredImages[activeIndex].desc}</p>
               </div>
-              <a
-                href={filteredImages[activeIndex].src}
-                download={`PT-TRGMIX-${filteredImages[activeIndex].category}-${filteredImages[activeIndex].id}.jpeg`}
-                className="btn btn-primary lightbox-download-btn"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                📥 Unduh Gambar
-              </a>
+              {filteredImages[activeIndex].type === 'video' ? (
+                <a
+                  href={filteredImages[activeIndex].videoSrc}
+                  download={`PT-TRGMIX-video-${filteredImages[activeIndex].id}.mp4`}
+                  className="btn btn-primary lightbox-download-btn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  📥 Unduh Video
+                </a>
+              ) : (
+                <a
+                  href={filteredImages[activeIndex].src}
+                  download={`PT-TRGMIX-${filteredImages[activeIndex].category}-${filteredImages[activeIndex].id}.jpeg`}
+                  className="btn btn-primary lightbox-download-btn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  📥 Unduh Gambar
+                </a>
+              )}
             </div>
           </div>
         </div>
