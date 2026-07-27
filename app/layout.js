@@ -4,6 +4,15 @@ export const metadata = {
   title: 'PT. Trans Ringo Groupmix — Supplier, Kontraktor & Beton ReadyMix',
   description: 'PT. Trans Ringo Groupmix adalah perusahaan yang bergerak di bidang Supplier Material, Kontraktor, dan Beton ReadyMix dengan Batching Plant berkapasitas 90M³/jam. Melayani kebutuhan beton siap pakai untuk proyek BUMN maupun Swasta.',
   keywords: 'beton readymix, batching plant, supplier material, kontraktor, bekasi, jawa barat, beton siap pakai',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/images/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   openGraph: {
     title: 'PT. Trans Ringo Groupmix',
     description: 'Supplier Material, Kontraktor & Beton ReadyMix Terpercaya',
