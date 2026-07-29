@@ -13,6 +13,9 @@ export const metadata = {
     shortcut: '/favicon.ico',
     apple: '/favicon.ico',
   },
+  alternates: {
+    canonical: 'https://trgmix.com',
+  },
   openGraph: {
     title: 'PT. Trans Ringo Groupmix',
     description: 'Supplier Material, Kontraktor & Beton ReadyMix Terpercaya',
