@@ -1304,47 +1304,72 @@ if ($is_logged_in) {
 
             // Generate coordinates
             const pointsCount = dataPoints.length;
-            const stepX = width / (pointsCount - 1);
+            const stepX = width / Math.max(pointsCount - 1, 1);
             
             let coords = [];
             dataPoints.forEach((p, idx) => {
                 const x = idx * stepX;
                 const scaleY = (maxVal > 0) ? (p.views / maxVal) : 0;
-                const y = height - (scaleY * (height - topMargin));
+                // Cap y so the line never sits at the very bottom edge (clipped)
+                const y = Math.min(height - (scaleY * (height - topMargin)), height - 8);
                 coords.push({ x, y, data: p });
             });
 
-            // Build line & area path strings
+            // Build SMOOTH line & area path strings using Cubic Bezier Splines
             let linePathStr = '';
             let areaPathStr = '';
+            const areaBottom = height + 5;
 
-            if (coords.length > 0) {
-                linePathStr = `M ${coords[0].x} ${coords[0].y}`;
-                areaPathStr = `M ${coords[0].x} ${height} L ${coords[0].x} ${coords[0].y}`;
+            // Helper: generate smooth cubic bezier control points (Catmull-Rom → Cubic Bezier)
+            function getControlPoints(pts) {
+                const tension = 0.3; // 0 = straight, 1 = very curvy
+                let cp = [];
+                for (let i = 0; i < pts.length - 1; i++) {
+                    const p0 = pts[Math.max(i - 1, 0)];
+                    const p1 = pts[i];
+                    const p2 = pts[i + 1];
+                    const p3 = pts[Math.min(i + 2, pts.length - 1)];
 
-                for (let i = 1; i < coords.length; i++) {
-                    linePathStr += ` L ${coords[i].x} ${coords[i].y}`;
-                    areaPathStr += ` L ${coords[i].x} ${coords[i].y}`;
+                    const cp1x = p1.x + (p2.x - p0.x) * tension;
+                    const cp1y = p1.y + (p2.y - p0.y) * tension;
+                    const cp2x = p2.x - (p3.x - p1.x) * tension;
+                    const cp2y = p2.y - (p3.y - p1.y) * tension;
+
+                    cp.push({ cp1x, cp1y, cp2x, cp2y, x: p2.x, y: p2.y });
                 }
+                return cp;
+            }
 
-                areaPathStr += ` L ${coords[coords.length - 1].x} ${height} Z`;
+            if (coords.length > 1) {
+                const cp = getControlPoints(coords);
+
+                // Line path (smooth)
+                linePathStr = `M ${coords[0].x} ${coords[0].y}`;
+                cp.forEach(seg => {
+                    linePathStr += ` C ${seg.cp1x} ${seg.cp1y}, ${seg.cp2x} ${seg.cp2y}, ${seg.x} ${seg.y}`;
+                });
+
+                // Area path (smooth + filled to bottom)
+                areaPathStr = `M ${coords[0].x} ${areaBottom} L ${coords[0].x} ${coords[0].y}`;
+                cp.forEach(seg => {
+                    areaPathStr += ` C ${seg.cp1x} ${seg.cp1y}, ${seg.cp2x} ${seg.cp2y}, ${seg.x} ${seg.y}`;
+                });
+                areaPathStr += ` L ${coords[coords.length - 1].x} ${areaBottom} Z`;
+            } else if (coords.length === 1) {
+                linePathStr = `M ${coords[0].x} ${coords[0].y} L ${coords[0].x} ${coords[0].y}`;
+                areaPathStr = `M ${coords[0].x} ${areaBottom} L ${coords[0].x} ${coords[0].y} L ${coords[0].x} ${areaBottom} Z`;
             }
 
             if (pathLine) pathLine.setAttribute('d', linePathStr);
             if (pathArea) pathArea.setAttribute('d', areaPathStr);
 
-            // Render interactive points (only render dots if 7 days or today to avoid clutter)
-            const shouldRenderDots = (currentPeriod === '7days' || currentPeriod === 'today');
+            // Render interactive dots on all data points
             coords.forEach((coord, idx) => {
                 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                 circle.setAttribute('cx', coord.x.toString());
                 circle.setAttribute('cy', coord.y.toString());
-                circle.setAttribute('r', shouldRenderDots ? '4' : '3');
+                circle.setAttribute('r', '4');
                 circle.setAttribute('class', 'chart-dot');
-                if (!shouldRenderDots) {
-                    circle.style.opacity = '0'; // Hidden but still hoverable
-                    circle.setAttribute('r', '8'); // Large hover target
-                }
                 
                 // Mouse event listeners for tooltip
                 circle.addEventListener('mouseenter', (e) => {
