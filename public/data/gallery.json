@@ -1,0 +1,22 @@
+[
+  { "id": "v1", "src": "/images/gallery/video-activity-1.jpg", "videoSrc": "/videos/activity-1.mp4", "type": "video", "category": "kegiatan", "title": "Aktivitas Harian Loader", "desc": "Pengisian material alam agregat ke hopper batching plant menggunakan wheel loader." },
+  { "id": "v2", "src": "/images/gallery/video-activity-2.jpg", "videoSrc": "/videos/activity-2.mp4", "type": "video", "category": "kegiatan", "title": "Loading Beton ke Truk Mixer", "desc": "Proses pengisian beton ReadyMix segar dari mixer batching plant ke dalam armada truk mixer." },
+  { "id": "v3", "src": "/images/gallery/video-zoomlion.jpg", "videoSrc": "/videos/zoomlion.mp4", "type": "video", "category": "alat berat", "title": "Serah Terima Ekskavator Zoomlion", "desc": "Serah terima dan kesiapan operasional alat berat ekskavator baru untuk mendukung proyek kontraktor." },
+  { "id": "v4", "src": "/images/gallery/video-night-op.jpg", "videoSrc": "/videos/night-op.mp4", "type": "video", "category": "kegiatan", "title": "Operasional Malam Hari", "desc": "Aktivitas pengolahan dan loading material pada malam hari demi mengejar target proyek tepat waktu." },
+  { "id": 1, "src": "/images/gallery/gallery-1.jpeg", "category": "produksi", "title": "Operasional Batching Plant", "desc": "Aktivitas pengolahan bahan baku beton di batching plant modern." },
+  { "id": 2, "src": "/images/gallery/gallery-2.jpeg", "category": "armada", "title": "Armada Truk Mixer", "desc": "Barisan truk mixer siap mendistribusikan beton siap pakai ke lokasi proyek." },
+  { "id": 3, "src": "/images/gallery/gallery-3.jpeg", "category": "proyek", "title": "Proyek Pengecoran Jalan", "desc": "Proses perataan beton segar untuk rigid pavement jalan raya." },
+  { "id": 4, "src": "/images/gallery/gallery-4.jpeg", "category": "produksi", "title": "Kontrol Kualitas Beton", "desc": "Pengujian slump test untuk memastikan konsistensi kualitas adukan beton." },
+  { "id": 5, "src": "/images/gallery/gallery-5.jpeg", "category": "armada", "title": "Kesiapan Pengiriman", "desc": "Armada truk mixer keluar dari area loading dengan muatan beton siap pakai." },
+  { "id": 6, "src": "/images/gallery/gallery-6.jpeg", "category": "proyek", "title": "Pengecoran Struktur Gedung", "desc": "Penyaluran beton ReadyMix menggunakan concrete pump ke struktur bertingkat." },
+  { "id": 7, "src": "/images/gallery/gallery-7.jpeg", "category": "produksi", "title": "Pabrikasi Beton ReadyMix", "desc": "Pengawasan sistem pencampuran material agregat halus, kasar, dan semen." },
+  { "id": 8, "src": "/images/gallery/gallery-8.jpeg", "category": "proyek", "title": "Pengecoran Dak Lantai", "desc": "Pengecoran plat lantai dak beton bertulang pada proyek gedung ruko." },
+  { "id": 9, "src": "/images/gallery/gallery-9.jpeg", "category": "armada", "title": "Mobilisasi Truk Mixer", "desc": "Koordinasi armada di jalan untuk memastikan beton sampai tepat waktu sebelum setting." },
+  { "id": 10, "src": "/images/gallery/gallery-10.jpeg", "category": "produksi", "title": "Fasilitas Batching Plant", "desc": "Infrastruktur silo semen dan penyimpanan material pasir batu split." },
+  { "id": 11, "src": "/images/gallery/gallery-11.jpeg", "category": "proyek", "title": "Pengecoran Rigid Pavement", "desc": "Finishing permukaan beton jalan raya agar menghasilkan tekstur anti-selip." },
+  { "id": 12, "src": "/images/gallery/gallery-12.jpeg", "category": "produksi", "title": "Bahan Baku Agregat", "desc": "Stok material batu split berkualitas tinggi sebagai bahan dasar adukan beton." },
+  { "id": 13, "src": "/images/gallery/gallery-13.jpeg", "category": "armada", "title": "Line-up Armada Pengiriman", "desc": "Persiapan harian armada pengiriman beton untuk proyek komersial." },
+  { "id": 14, "src": "/images/gallery/gallery-14.jpeg", "category": "proyek", "title": "Konstruksi Sipil & Cor Beton", "desc": "Pekerjaan bekisting dan pembesian kolom sebelum diisi adukan beton." },
+  { "id": 15, "src": "/images/gallery/gallery-15.jpeg", "category": "produksi", "title": "Sistem Pencampuran Otomatis", "desc": "Teknologi computerized batching control panel untuk akurasi formula beton." },
+  { "id": 16, "src": "/images/gallery/gallery-16.jpeg", "category": "proyek", "title": "Pekerjaan Pengecoran Selesai", "desc": "Tahap curing permukaan beton yang baru selesai dicor untuk menjaga kelembaban." }
+]

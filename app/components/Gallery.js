@@ -27,12 +27,29 @@ const galleryImages = [
 ];
 
 export default function Gallery() {
+  const [images, setImages] = useState(galleryImages);
   const [activeIndex, setActiveIndex] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const sliderRef = useRef(null);
 
+  useEffect(() => {
+    fetch('/data/gallery.json')
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error('Failed to load live data');
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setImages(data);
+        }
+      })
+      .catch((err) => {
+        console.log('Using default static gallery:', err);
+      });
+  }, []);
+
   // Show all gallery images in the slider
-  const filteredImages = galleryImages;
+  const filteredImages = images;
 
   const handleScroll = (direction) => {
     if (sliderRef.current) {
