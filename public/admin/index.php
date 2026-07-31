@@ -3,7 +3,7 @@ session_start();
 
 // Configuration
 // Default password is 'admin123'. You can change this to any secure password you want.
-$password_hash = '$2y$10$U50D95mvewAksjA/L/UqUu0nFswVq7Z4q6l6D7g.D0h24c/94U7W6'; 
+$password_hash = '$2y$12$wNfXUP28k04AzuupwZ3im.cwyBhMIWsOw74kiiZA.rvDpS9eTORPC'; 
 
 $json_file = '../data/gallery.json';
 $image_upload_dir = '../images/gallery/';
