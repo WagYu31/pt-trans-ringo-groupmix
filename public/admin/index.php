@@ -1153,10 +1153,16 @@ if ($is_logged_in) {
             }
         }
 
-        // Injected PHP Data
+        // Injected PHP Data (only when logged in)
+        <?php if ($is_logged_in): ?>
         const rawAnalyticsData = <?php echo json_encode(array_values($analytics['chart_data'])); ?>;
         const totalViewsAllTime = <?php echo $analytics['total_views']; ?>;
         const totalUniquesAllTime = <?php echo $analytics['total_uniques']; ?>;
+        <?php else: ?>
+        const rawAnalyticsData = [];
+        const totalViewsAllTime = 0;
+        const totalUniquesAllTime = 0;
+        <?php endif; ?>
 
         let currentPeriod = '30days';
 
@@ -1393,6 +1399,23 @@ if ($is_logged_in) {
             const guideLine = document.getElementById('guide-line');
             if (tooltip) tooltip.style.display = 'none';
             if (guideLine) guideLine.style.display = 'none';
+        }
+
+        function updateFileName(input, targetId) {
+            var fileNameSpan = document.getElementById(targetId);
+            if (input.files && input.files[0]) {
+                fileNameSpan.innerText = input.files[0].name;
+                fileNameSpan.style.color = '#ffffff';
+                fileNameSpan.style.fontWeight = 'bold';
+            } else {
+                if (targetId === 'image-file-name') {
+                    fileNameSpan.innerText = "Pilih File Gambar";
+                } else {
+                    fileNameSpan.innerText = "Pilih File Video";
+                }
+                fileNameSpan.style.color = '#9ca3af';
+                fileNameSpan.style.fontWeight = 'normal';
+            }
         }
     </script>
 </head>
