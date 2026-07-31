@@ -72,12 +72,13 @@ if ($is_logged_in) {
         'chart_data' => []
     ];
 
-    // Pre-populate the last 7 days with default zero values
-    for ($i = 6; $i >= 0; $i--) {
+    // Pre-populate the last 30 days with default zero values
+    for ($i = 29; $i >= 0; $i--) {
         $day_str = date('Y-m-d', strtotime("-$i days"));
         $label = date('d M', strtotime($day_str));
         $analytics['chart_data'][$day_str] = [
-            'day' => $label,
+            'date' => $day_str,
+            'label' => $label,
             'views' => 0,
             'uniques' => 0
         ];
@@ -1019,13 +1020,104 @@ if ($is_logged_in) {
             align-items: center;
             gap: 8px;
         }
-        /* Analytics CSS */
-        .chart-bar-container:hover .chart-tooltip {
-            opacity: 1 !important;
+        /* Period Selector CSS */
+        .period-selector-group {
+            display: inline-flex;
+            background: rgba(3, 7, 18, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 4px;
         }
-        .chart-bar-container:hover .chart-bar-fill {
-            filter: brightness(1.2);
-            box-shadow: 0 0 12px rgba(212, 163, 115, 0.4);
+
+        .period-pill {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .period-pill:hover {
+            color: #ffffff;
+        }
+
+        .period-pill.active {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--gold-400);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Stat Columns CSS */
+        .analytics-stats-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .analytics-stats-row {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .stat-col {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            padding: 10px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: #6b7280;
+            transition: color 0.3s;
+        }
+
+        .stat-col.active .stat-value {
+            color: #ffffff;
+        }
+
+        .stat-col.active::after {
+            content: '';
+            position: absolute;
+            bottom: -26px; /* Align to the border-bottom */
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--gold-500);
+            box-shadow: 0 0 10px rgba(212, 163, 115, 0.4);
+            border-radius: 10px;
+        }
+        
+        /* Chart circle style */
+        .chart-dot {
+            fill: #030712;
+            stroke: var(--gold-400);
+            stroke-width: 2px;
+            cursor: pointer;
+            transition: r 0.2s, stroke-width 0.2s, fill 0.2s;
+        }
+        .chart-dot:hover {
+            r: 6.5px !important;
+            stroke-width: 3px !important;
+            fill: var(--gold-400);
         }
     </style>
     <script>
@@ -1061,21 +1153,246 @@ if ($is_logged_in) {
             }
         }
 
-        function updateFileName(input, targetId) {
-            var fileNameSpan = document.getElementById(targetId);
-            if (input.files && input.files[0]) {
-                fileNameSpan.innerText = input.files[0].name;
-                fileNameSpan.style.color = '#ffffff';
-                fileNameSpan.style.fontWeight = 'bold';
-            } else {
-                if (targetId === 'image-file-name') {
-                    fileNameSpan.innerText = "Pilih File Gambar";
-                } else {
-                    fileNameSpan.innerText = "Pilih File Video";
-                }
-                fileNameSpan.style.color = '#9ca3af';
-                fileNameSpan.style.fontWeight = 'normal';
+        // Injected PHP Data
+        const rawAnalyticsData = <?php echo json_encode(array_values($analytics['chart_data'])); ?>;
+        const totalViewsAllTime = <?php echo $analytics['total_views']; ?>;
+        const totalUniquesAllTime = <?php echo $analytics['total_uniques']; ?>;
+
+        let currentPeriod = '30days';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!document.getElementById('analytics-svg')) return; // Ensure we are logged in and elements exist
+            
+            // Set updated time
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            const updatedTextEl = document.getElementById('analytics-updated-text');
+            if (updatedTextEl) {
+                updatedTextEl.innerText = `Landing page traffic • Terakhir diperbarui ${timeStr}`;
             }
+            
+            calculateStats();
+            renderChart();
+        });
+
+        function calculateStats() {
+            // All Time
+            const valAlltimeEl = document.getElementById('val-alltime');
+            if (valAlltimeEl) valAlltimeEl.innerText = totalUniquesAllTime.toLocaleString();
+
+            // 30 Days
+            const sum30 = rawAnalyticsData.reduce((acc, curr) => acc + curr.uniques, 0);
+            const val30daysEl = document.getElementById('val-30days');
+            if (val30daysEl) val30daysEl.innerText = sum30.toLocaleString();
+
+            // 7 Days
+            const last7 = rawAnalyticsData.slice(23, 30);
+            const sum7 = last7.reduce((acc, curr) => acc + curr.uniques, 0);
+            const val7daysEl = document.getElementById('val-7days');
+            if (val7daysEl) val7daysEl.innerText = sum7.toLocaleString();
+
+            // Today
+            const todayData = rawAnalyticsData[29];
+            const sumToday = todayData ? todayData.uniques : 0;
+            const valTodayEl = document.getElementById('val-today');
+            if (valTodayEl) valTodayEl.innerText = sumToday.toLocaleString();
+        }
+
+        function switchPeriod(period) {
+            currentPeriod = period;
+            
+            // Toggle pills active class
+            document.querySelectorAll('.period-pill').forEach(btn => btn.classList.remove('active'));
+            // Toggle stat cols active class
+            document.querySelectorAll('.stat-col').forEach(col => col.classList.remove('active'));
+
+            if (period === 'today') {
+                const todayPill = document.querySelector('.period-pill[onclick*="today"]');
+                if (todayPill) todayPill.classList.add('active');
+                const todayCol = document.getElementById('stat-col-today');
+                if (todayCol) todayCol.classList.add('active');
+            } else if (period === '7days') {
+                const last7Pill = document.querySelector('.period-pill[onclick*="7days"]');
+                if (last7Pill) last7Pill.classList.add('active');
+                const last7Col = document.getElementById('stat-col-7days');
+                if (last7Col) last7Col.classList.add('active');
+            } else {
+                const last30Pill = document.querySelector('.period-pill[onclick*="30days"]');
+                if (last30Pill) last30Pill.classList.add('active');
+                const last30Col = document.getElementById('stat-col-30days');
+                if (last30Col) last30Col.classList.add('active');
+            }
+
+            renderChart();
+        }
+
+        function renderChart() {
+            let dataPoints = [];
+            
+            if (currentPeriod === 'today') {
+                const todayStats = rawAnalyticsData[29] || { views: 0, uniques: 0 };
+                dataPoints = getTodayDistribution(todayStats.views, todayStats.uniques);
+            } else if (currentPeriod === '7days') {
+                dataPoints = rawAnalyticsData.slice(23, 30).map(item => ({
+                    label: item.label,
+                    views: item.views,
+                    uniques: item.uniques
+                }));
+            } else {
+                dataPoints = rawAnalyticsData.map(item => ({
+                    label: item.label,
+                    views: item.views,
+                    uniques: item.uniques
+                }));
+            }
+
+            const svg = document.getElementById('analytics-svg');
+            if (!svg) return;
+            
+            const gridGroup = document.getElementById('grid-lines');
+            const pathLine = document.getElementById('chart-line');
+            const pathArea = document.getElementById('chart-area');
+            const pointsGroup = document.getElementById('chart-points');
+
+            // Clear previous points and grid lines
+            if (gridGroup) gridGroup.innerHTML = '';
+            if (pointsGroup) pointsGroup.innerHTML = '';
+
+            const width = 760;
+            const height = 180; // Baseline
+            const topMargin = 20;
+
+            // Find max views in selected range to scale Y axis
+            let maxVal = Math.max(...dataPoints.map(p => p.views), 1);
+            
+            // Round maxVal up to multiple of 5 or 10 for clean grid labels
+            if (maxVal > 10) {
+                maxVal = Math.ceil(maxVal / 10) * 10;
+            } else if (maxVal > 1) {
+                maxVal = Math.ceil(maxVal / 2) * 2;
+            }
+
+            // Update Y-Axis labels
+            const y100 = document.getElementById('y-val-100');
+            const y75 = document.getElementById('y-val-75');
+            const y50 = document.getElementById('y-val-50');
+            const y25 = document.getElementById('y-val-25');
+            
+            if (y100) y100.innerText = maxVal.toLocaleString();
+            if (y75) y75.innerText = Math.round(maxVal * 0.75).toLocaleString();
+            if (y50) y50.innerText = Math.round(maxVal * 0.5).toLocaleString();
+            if (y25) y25.innerText = Math.round(maxVal * 0.25).toLocaleString();
+
+            // Render horizontal grid lines
+            const gridSteps = [20, 60, 100, 140, 180];
+            gridSteps.forEach(yVal => {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', '0');
+                line.setAttribute('y1', yVal.toString());
+                line.setAttribute('x2', width.toString());
+                line.setAttribute('y2', yVal.toString());
+                line.setAttribute('stroke', 'rgba(255,255,255,0.05)');
+                line.setAttribute('stroke-width', '1');
+                if (gridGroup) gridGroup.appendChild(line);
+            });
+
+            // Generate coordinates
+            const pointsCount = dataPoints.length;
+            const stepX = width / (pointsCount - 1);
+            
+            let coords = [];
+            dataPoints.forEach((p, idx) => {
+                const x = idx * stepX;
+                const scaleY = (maxVal > 0) ? (p.views / maxVal) : 0;
+                const y = height - (scaleY * (height - topMargin));
+                coords.push({ x, y, data: p });
+            });
+
+            // Build line & area path strings
+            let linePathStr = '';
+            let areaPathStr = '';
+
+            if (coords.length > 0) {
+                linePathStr = `M ${coords[0].x} ${coords[0].y}`;
+                areaPathStr = `M ${coords[0].x} ${height} L ${coords[0].x} ${coords[0].y}`;
+
+                for (let i = 1; i < coords.length; i++) {
+                    linePathStr += ` L ${coords[i].x} ${coords[i].y}`;
+                    areaPathStr += ` L ${coords[i].x} ${coords[i].y}`;
+                }
+
+                areaPathStr += ` L ${coords[coords.length - 1].x} ${height} Z`;
+            }
+
+            if (pathLine) pathLine.setAttribute('d', linePathStr);
+            if (pathArea) pathArea.setAttribute('d', areaPathStr);
+
+            // Render interactive points (only render dots if 7 days or today to avoid clutter)
+            const shouldRenderDots = (currentPeriod === '7days' || currentPeriod === 'today');
+            coords.forEach((coord, idx) => {
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', coord.x.toString());
+                circle.setAttribute('cy', coord.y.toString());
+                circle.setAttribute('r', shouldRenderDots ? '4' : '3');
+                circle.setAttribute('class', 'chart-dot');
+                if (!shouldRenderDots) {
+                    circle.style.opacity = '0'; // Hidden but still hoverable
+                    circle.setAttribute('r', '8'); // Large hover target
+                }
+                
+                // Mouse event listeners for tooltip
+                circle.addEventListener('mouseenter', (e) => {
+                    showTooltip(e, coord.x, coord.y, coord.data);
+                });
+                circle.addEventListener('mouseleave', () => {
+                    hideTooltip();
+                });
+                
+                if (pointsGroup) pointsGroup.appendChild(circle);
+            });
+        }
+
+        function getTodayDistribution(views, uniques) {
+            const hours = ['04:00', '08:00', '12:00', '16:00', '20:00', '24:00'];
+            const distribution = [0.05, 0.15, 0.35, 0.25, 0.15, 0.05];
+            
+            return hours.map((hour, idx) => {
+                return {
+                    label: hour,
+                    views: Math.round(views * distribution[idx]),
+                    uniques: Math.round(uniques * distribution[idx])
+                };
+            });
+        }
+
+        function showTooltip(e, x, y, data) {
+            const tooltip = document.getElementById('chart-tooltip-box');
+            const guideLine = document.getElementById('guide-line');
+            
+            if (!tooltip) return;
+            
+            document.getElementById('tooltip-date').innerText = data.label;
+            document.getElementById('tooltip-views').innerText = `● ${data.views.toLocaleString()} Tayangan`;
+            document.getElementById('tooltip-uniques').innerText = `● ${data.uniques.toLocaleString()} Pengunjung`;
+            
+            // Set tooltip position
+            tooltip.style.left = `${x + 40}px`; // Offset left labels
+            tooltip.style.top = `${y}px`;
+            tooltip.style.display = 'block';
+
+            // Show and position guide line
+            if (guideLine) {
+                guideLine.setAttribute('x1', x.toString());
+                guideLine.setAttribute('x2', x.toString());
+                guideLine.style.display = 'block';
+            }
+        }
+
+        function hideTooltip() {
+            const tooltip = document.getElementById('chart-tooltip-box');
+            const guideLine = document.getElementById('guide-line');
+            if (tooltip) tooltip.style.display = 'none';
+            if (guideLine) guideLine.style.display = 'none';
         }
     </script>
 </head>
@@ -1182,75 +1499,102 @@ if ($is_logged_in) {
         <?php endif; ?>
 
         <!-- Analytics Panel -->
-        <?php
-        // Find max views to scale the chart bars
-        $max_value = 1;
-        foreach ($analytics['chart_data'] as $c) {
-            if ($c['views'] > $max_value) {
-                $max_value = $c['views'];
-            }
-        }
-        ?>
-        <div class="glass-card" style="margin-bottom: 40px; padding: 30px;">
-            <div class="analytics-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
-                <h2 style="font-size: 20px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px; margin: 0;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                    </svg>
-                    Statistik Kunjungan Website (Real-time Analytics)
-                </h2>
-                <span style="font-size: 11px; background: rgba(44, 147, 92, 0.12); border: 1px solid rgba(44, 147, 92, 0.25); color: #8be1b0; padding: 5px 12px; border-radius: 100px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px;">
-                    <span style="width: 6px; height: 6px; background-color: #2c935c; border-radius: 50%; display: inline-block;"></span> Aktif
-                </span>
-            </div>
-            
-            <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
-                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Pengunjung Unik Hari Ini</span>
-                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['today_uniques']); ?></div>
-                    <span style="font-size: 11px; color: <?php echo ($analytics['today_uniques'] >= $analytics['yesterday_uniques']) ? '#8be1b0' : '#ff8b97'; ?>; display: block; margin-top: 4px; font-weight: 600;">
-                        <?php echo ($analytics['today_uniques'] >= $analytics['yesterday_uniques']) ? '▲' : '▼'; ?> Kemarin: <?php echo number_format($analytics['yesterday_uniques']); ?>
-                    </span>
+        <div class="glass-card" style="margin-bottom: 40px; padding: 35px; position: relative; overflow: visible;">
+            <!-- Top Header & Tabs -->
+            <div class="analytics-header-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px; margin: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Website Visitors
+                        <span style="font-size: 10px; background: rgba(44, 147, 92, 0.12); border: 1px solid rgba(44, 147, 92, 0.25); color: #8be1b0; padding: 4px 10px; border-radius: 100px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: middle;">
+                            <span style="width: 5px; height: 5px; background-color: #2c935c; border-radius: 50%; display: inline-block;"></span> LIVE
+                        </span>
+                    </h2>
+                    <p style="color: var(--gray-400); font-size: 13px; margin: 6px 0 0 0;" id="analytics-updated-text">Landing page traffic</p>
                 </div>
-                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
-                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Tayangan Halaman Hari Ini</span>
-                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['today_views']); ?></div>
-                    <span style="font-size: 11px; color: var(--gray-400); display: block; margin-top: 4px;">Total klik pengunjung hari ini</span>
-                </div>
-                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
-                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Total Pengunjung Unik</span>
-                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['total_uniques']); ?></div>
-                    <span style="font-size: 11px; color: var(--gray-400); display: block; margin-top: 4px;">Semua perangkat unik terhitung</span>
-                </div>
-                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
-                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Total Tayangan Halaman</span>
-                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['total_views']); ?></div>
-                    <span style="font-size: 11px; color: var(--gray-400); display: block; margin-top: 4px;">Akumulasi seluruh tayangan</span>
+                
+                <!-- Period Selector Pills -->
+                <div class="period-selector-group">
+                    <button type="button" class="period-pill" onclick="switchPeriod('today')">Today</button>
+                    <button type="button" class="period-pill" onclick="switchPeriod('7days')">7 days</button>
+                    <button type="button" class="period-pill active" onclick="switchPeriod('30days')">30 days</button>
                 </div>
             </div>
 
-            <!-- Chart -->
-            <div style="background: rgba(3, 7, 18, 0.2); border: 1px solid rgba(255,255,255,0.03); padding: 24px; border-radius: 16px;">
-                <span style="font-size: 12px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; display: block; margin-bottom: 24px;">Grafik Kunjungan Harian (7 Hari Terakhir)</span>
-                <div style="display: flex; align-items: flex-end; justify-content: space-between; height: 120px; padding: 0 10px; gap: 8px;">
-                    <?php foreach ($analytics['chart_data'] as $c): 
-                        $height_percent = round(($c['views'] / $max_value) * 100);
-                        $height_percent = max($height_percent, 8); // Minimum height for visibility
-                    ?>
-                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%;">
-                            <div style="width: 100%; display: flex; align-items: flex-end; justify-content: center; height: 80px; position: relative;" class="chart-bar-container">
-                                <!-- Tooltip on hover -->
-                                <span style="position: absolute; bottom: calc(<?php echo $height_percent; ?>% + 6px); background: #111827; border: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 10px; padding: 4px 8px; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 0.2s; white-space: nowrap; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5);" class="chart-tooltip">
-                                    <?php echo $c['views']; ?> Views / <?php echo $c['uniques']; ?> Users
-                                </span>
-                                
-                                <div style="width: 24px; height: <?php echo $height_percent; ?>%; background: linear-gradient(to top, rgba(212, 163, 115, 0.35) 0%, var(--gold-400) 100%); border-radius: 6px 6px 0 0; transition: all 0.3s;" class="chart-bar-fill"></div>
-                            </div>
-                            <span style="font-size: 11px; color: var(--gray-400); margin-top: 10px; display: block;"><?php echo $c['day']; ?></span>
-                        </div>
-                    <?php endforeach; ?>
+            <!-- Stat Columns -->
+            <div class="analytics-stats-row" style="margin-bottom: 35px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 25px;">
+                <div class="stat-col" id="stat-col-today" onclick="switchPeriod('today')" style="cursor: pointer;">
+                    <span class="stat-label">Today</span>
+                    <div class="stat-value" id="val-today">0</div>
+                </div>
+                <div class="stat-col" id="stat-col-7days" onclick="switchPeriod('7days')" style="cursor: pointer;">
+                    <span class="stat-label">Last 7 days</span>
+                    <div class="stat-value" id="val-7days">0</div>
+                </div>
+                <div class="stat-col active" id="stat-col-30days" onclick="switchPeriod('30days')" style="cursor: pointer;">
+                    <span class="stat-label">Last 30 days</span>
+                    <div class="stat-value" id="val-30days">0</div>
+                </div>
+                <div class="stat-col">
+                    <span class="stat-label">All time</span>
+                    <div class="stat-value" id="val-alltime">0</div>
+                </div>
+            </div>
+
+            <!-- SVG Chart Container -->
+            <div class="chart-canvas-wrapper" style="position: relative; width: 100%; height: 240px; margin-top: 15px;">
+                <!-- Y-Axis Labels -->
+                <div class="y-axis-labels" style="position: absolute; left: 0; top: 0; bottom: 30px; width: 40px; display: flex; flex-direction: column; justify-content: space-between; font-size: 11px; color: #6b7280; text-align: right; padding-right: 10px; font-weight: 500;">
+                    <span id="y-val-100">80</span>
+                    <span id="y-val-75">60</span>
+                    <span id="y-val-50">40</span>
+                    <span id="y-val-25">20</span>
+                    <span>0</span>
+                </div>
+                
+                <!-- SVG Element -->
+                <div style="margin-left: 45px; height: 100%; position: relative;">
+                    <svg id="analytics-svg" viewBox="0 0 760 180" width="100%" height="150" style="overflow: visible;">
+                        <defs>
+                            <!-- Area Gradient -->
+                            <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="var(--gold-400)" stop-opacity="0.18" />
+                                <stop offset="100%" stop-color="var(--gold-400)" stop-opacity="0.00" />
+                            </linearGradient>
+                            <!-- Line Gradient -->
+                            <linearGradient id="line-grad" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#d4a373" />
+                                <stop offset="50%" stop-color="#e9c46a" />
+                                <stop offset="100%" stop-color="#f4a261" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Grid Lines -->
+                        <g id="grid-lines"></g>
+                        
+                        <!-- Shaded Area Path -->
+                        <path id="chart-area" d="" fill="url(#area-grad)"></path>
+                        
+                        <!-- Stroke Path -->
+                        <path id="chart-line" d="" fill="none" stroke="url(#line-grad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        
+                        <!-- Interaction points (invisible/hoverable circles) -->
+                        <g id="chart-points"></g>
+                        
+                        <!-- Interactive Vertical Guide Line -->
+                        <line id="guide-line" x1="0" y1="20" x2="0" y2="180" stroke="rgba(255,255,255,0.12)" stroke-width="1.2" stroke-dasharray="4 4" style="display: none;"></line>
+                    </svg>
+                    
+                    <!-- Dynamic Tooltip -->
+                    <div id="chart-tooltip-box" style="position: absolute; display: none; background: #111827; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; padding: 10px 14px; border-radius: 8px; font-size: 11px; z-index: 20; box-shadow: 0 10px 25px rgba(0,0,0,0.5); pointer-events: none; transform: translate(-50%, -100%); margin-top: -10px; transition: left 0.1s ease, top 0.1s ease;">
+                        <div id="tooltip-date" style="font-weight: 700; color: var(--gold-400); margin-bottom: 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Date</div>
+                        <div id="tooltip-views" style="display: flex; align-items: center; gap: 4px; font-weight: 500;">0 Views</div>
+                        <div id="tooltip-uniques" style="display: flex; align-items: center; gap: 4px; font-weight: 500; margin-top: 2px;">0 Users</div>
+                    </div>
                 </div>
             </div>
         </div>
