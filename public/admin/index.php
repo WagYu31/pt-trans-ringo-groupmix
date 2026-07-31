@@ -283,19 +283,21 @@ if ($is_logged_in) {
             display: flex;
             min-height: 100vh;
             width: 100%;
+            background-color: #030712;
+            overflow: hidden;
         }
 
         .login-cover {
             display: none;
-            flex: 1;
+            flex: 1.2;
             position: relative;
             overflow: hidden;
-            padding: 60px;
+            padding: 80px;
             flex-direction: column;
             justify-content: flex-end;
         }
 
-        @media (min-width: 900px) {
+        @media (min-width: 1024px) {
             .login-cover {
                 display: flex;
             }
@@ -306,47 +308,60 @@ if ($is_logged_in) {
             inset: 0;
             background-size: cover;
             background-position: center;
-            transform: scale(1.05);
-            transition: transform 10s ease;
+            filter: brightness(0.65) contrast(1.1);
+            transform: scale(1.02);
+            transition: transform 15s ease;
         }
 
         .login-cover:hover .login-cover-img {
-            transform: scale(1);
+            transform: scale(1.08);
         }
 
         .login-cover-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(10, 17, 40, 0.95) 20%, rgba(10, 17, 40, 0.4) 100%);
+            background: linear-gradient(135deg, rgba(10, 17, 40, 0.9) 0%, rgba(3, 7, 18, 0.95) 100%);
+            mix-blend-mode: multiply;
         }
 
         .login-cover-content {
             position: relative;
             z-index: 2;
-            max-width: 600px;
+            max-width: 550px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
             text-align: left;
         }
 
         .brand-label {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--gold-400);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            display: inline-block;
+            border-bottom: 2px solid var(--gold-500);
+            padding-bottom: 6px;
         }
 
         .cover-heading {
-            font-size: 36px;
-            font-weight: 700;
-            line-height: 1.25;
-            margin-bottom: 16px;
-            color: var(--text-light);
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 18px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
         }
 
         .cover-subheading {
-            font-size: 16px;
-            color: var(--gray-300);
+            font-size: 15px;
+            color: #9ca3af;
             line-height: 1.6;
         }
 
@@ -355,81 +370,177 @@ if ($is_logged_in) {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
-            background-color: var(--navy-900);
+            padding: 40px 24px;
+            background: radial-gradient(circle at 70% 30%, #111827 0%, #030712 100%);
             position: relative;
         }
 
-        @media (min-width: 900px) {
-            .login-form-pane {
-                max-width: 500px;
-                background-color: rgba(16, 31, 66, 0.3);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border-left: 1px solid rgba(255, 255, 255, 0.08);
-            }
+        .floating-glow-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .orb-1 {
+            background: var(--red-500);
+            top: 20%;
+            right: 10%;
+        }
+        .orb-2 {
+            background: #206db5;
+            bottom: 15%;
+            left: 20%;
+        }
+
+        .login-glass-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 28px;
+            padding: 45px 35px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 2;
         }
 
         .login-card-inner {
-            width: 100%;
-            max-width: 380px;
             text-align: center;
         }
 
-        .login-footer {
-            margin-top: 40px;
-            font-size: 12px;
-            color: var(--gray-400);
-        }
-
         .brand-logo-container {
-            margin-bottom: 24px;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 24px auto;
+            border-radius: 22px;
+            padding: 3px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
 
         .brand-logo-container img {
-            max-width: 150px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 18px;
         }
 
         .brand-title {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
             margin-bottom: 8px;
+            color: #ffffff;
         }
         .brand-title span.red { color: var(--red-500); }
-        .brand-title span.blue { color: #206db5; }
+        .brand-title span.blue { color: #3b82f6; }
         .brand-title span.gold { color: var(--gold-400); }
 
+        .brand-subtitle {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             text-align: left;
+            position: relative;
         }
 
         .form-label {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--gray-300);
+            color: #9ca3af;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            color: #6b7280;
+            pointer-events: none;
+            transition: color 0.3s;
+            z-index: 5;
         }
 
         .form-input {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(10, 17, 40, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            color: var(--text-light);
+            padding: 14px 16px 14px 46px;
+            background: rgba(3, 7, 18, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .form-input:focus {
             border-color: var(--gold-500);
+            background: rgba(3, 7, 18, 0.8);
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.15), inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .form-input:focus + .input-icon {
+            color: var(--gold-500);
+        }
+
+        .btn-primary-glow {
+            background: linear-gradient(135deg, var(--gold-500) 0%, #b88655 100%);
+            color: var(--navy-900);
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(212, 163, 115, 0.25);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 163, 115, 0.45);
+            opacity: 0.95;
+        }
+
+        .btn-primary-glow:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            margin-top: 35px;
+            font-size: 12px;
+            color: #6b7280;
+            letter-spacing: 0.5px;
         }
 
         .btn {
@@ -734,37 +845,56 @@ if ($is_logged_in) {
         <div class="login-cover">
             <div class="login-cover-img" style="background-image: url('/images/batching-plant.jpeg');"></div>
             <div class="login-cover-overlay"></div>
+            <div class="cover-top-brand">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+                <span>PT. TRANS RINGO GROUPMIX</span>
+            </div>
             <div class="login-cover-content">
-                <div class="brand-label">PT. TRANS RINGO GROUPMIX</div>
-                <h1 class="cover-heading">Portal Administrasi<br>Galeri Dokumentasi</h1>
-                <p class="cover-subheading">Kelola seluruh aset digital foto dan video kegiatan batching plant secara profesional dan terpusat.</p>
+                <div class="brand-label">Sistem Operasional</div>
+                <h1 class="cover-heading"><span class="gradient-text">Portal Administrasi</span><br>Galeri Dokumentasi</h1>
+                <p class="cover-subheading">Akses terpusat untuk mengelola, menyusun, dan mempublikasikan seluruh dokumentasi operasional Batching Plant dan kesiapan alat berat secara langsung.</p>
             </div>
         </div>
         <!-- Right Side: Form Section -->
         <div class="login-form-pane">
-            <div class="login-card-inner">
-                <div class="brand-logo-container">
-                    <img src="/images/logo.jpeg" alt="TRGMIX Logo">
-                </div>
-                <h2 class="brand-title">
-                    <span class="red">TRG</span><span class="blue">MIX</span> Admin Portal
-                </h2>
-                <p style="color: var(--gray-400); font-size: 14px; margin-bottom: 24px;">Silakan masukkan password untuk mengelola galeri.</p>
-
-                <?php if (isset($error)): ?>
-                    <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-                <?php endif; ?>
-
-                <form action="index.php" method="POST">
-                    <input type="hidden" name="login" value="1">
-                    <div class="form-group">
-                        <label class="form-label" for="password">Password Portal</label>
-                        <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" required autofocus>
+            <div class="floating-glow-orb orb-1"></div>
+            <div class="floating-glow-orb orb-2"></div>
+            
+            <div class="login-glass-container">
+                <div class="login-card-inner">
+                    <div class="brand-logo-container">
+                        <img src="/images/logo.jpeg" alt="TRGMIX Logo">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Masuk Dashboard →</button>
-                </form>
-                <div class="login-footer">
-                    &copy; <?php echo date('Y'); ?> PT. Trans Ringo Groupmix. All Rights Reserved.
+                    <h2 class="brand-title">
+                        <span class="red">TRG</span><span class="blue">MIX</span> Portal
+                    </h2>
+                    <p class="brand-subtitle">Masukkan password otentikasi untuk mengelola galeri utama website.</p>
+
+                    <?php if (isset($error)): ?>
+                        <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
+                    <?php endif; ?>
+
+                    <form action="index.php" method="POST">
+                        <input type="hidden" name="login" value="1">
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password Portal</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <input class="form-input" type="password" id="password" name="password" placeholder="Masukkan password" required autofocus>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary-glow">Masuk Dashboard ➔</button>
+                    </form>
+                    <div class="login-footer">
+                        &copy; <?php echo date('Y'); ?> PT. Trans Ringo Groupmix.
+                    </div>
                 </div>
             </div>
         </div>
