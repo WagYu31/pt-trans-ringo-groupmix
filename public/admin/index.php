@@ -486,7 +486,7 @@ if ($is_logged_in) {
 
         .form-input {
             width: 100%;
-            padding: 14px 16px 14px 46px;
+            padding: 14px 46px 14px 46px; /* 46px left (icon), 46px right (eye toggle) */
             background: rgba(3, 7, 18, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
@@ -504,6 +504,25 @@ if ($is_logged_in) {
         }
 
         .form-input:focus + .input-icon {
+            color: var(--gold-500);
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 16px;
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+            z-index: 6;
+        }
+
+        .password-toggle-btn:hover {
             color: var(--gold-500);
         }
 
@@ -815,6 +834,22 @@ if ($is_logged_in) {
         }
     </style>
     <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('password');
+            var eyeOpen = document.getElementById('eye-open');
+            var eyeClosed = document.getElementById('eye-closed');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                eyeOpen.style.display = 'block';
+                eyeClosed.style.display = 'none';
+            }
+        }
+
         function toggleVideoField() {
             var type = document.getElementById('type-select').value;
             var videoField = document.getElementById('video-upload-field');
@@ -887,6 +922,18 @@ if ($is_logged_in) {
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                 </svg>
                                 <input class="form-input" type="password" id="password" name="password" placeholder="Masukkan password" required autofocus>
+                                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility()">
+                                    <!-- Eye icon (Open) -->
+                                    <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <!-- Eye icon (Closed) -->
+                                    <svg id="eye-closed" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                         <button type="submit" class="btn-primary-glow">Masuk Dashboard ➔</button>
