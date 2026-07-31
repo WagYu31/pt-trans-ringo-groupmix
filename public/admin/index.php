@@ -61,6 +61,54 @@ if ($is_logged_in) {
     $message = '';
     $message_type = 'success';
 
+    // Load Visitor Analytics
+    $visitors_file = '../data/visitors.json';
+    $analytics = [
+        'total_views' => 0,
+        'total_uniques' => 0,
+        'today_views' => 0,
+        'today_uniques' => 0,
+        'yesterday_uniques' => 0,
+        'chart_data' => []
+    ];
+
+    if (file_exists($visitors_file)) {
+        $v_content = file_get_contents($visitors_file);
+        $v_decoded = json_decode($v_content, true);
+        if (is_array($v_decoded)) {
+            $analytics['total_views'] = $v_decoded['total_views'] ?? 0;
+            $analytics['total_uniques'] = $v_decoded['total_uniques'] ?? 0;
+            
+            $today_str = date('Y-m-d');
+            $yesterday_str = date('Y-m-d', strtotime('-1 day'));
+            
+            if (isset($v_decoded['days'][$today_str])) {
+                $analytics['today_views'] = $v_decoded['days'][$today_str]['views'] ?? 0;
+                $analytics['today_uniques'] = $v_decoded['days'][$today_str]['uniques'] ?? 0;
+            }
+            if (isset($v_decoded['days'][$yesterday_str])) {
+                $analytics['yesterday_uniques'] = $v_decoded['days'][$yesterday_str]['uniques'] ?? 0;
+            }
+            
+            // Prepare last 7 days chart data
+            for ($i = 6; $i >= 0; $i--) {
+                $day_str = date('Y-m-d', strtotime("-$i days"));
+                $label = date('d M', strtotime($day_str));
+                $views_cnt = 0;
+                $uniques_cnt = 0;
+                if (isset($v_decoded['days'][$day_str])) {
+                    $views_cnt = $v_decoded['days'][$day_str]['views'] ?? 0;
+                    $uniques_cnt = $v_decoded['days'][$day_str]['uniques'] ?? 0;
+                }
+                $analytics['chart_data'][] = [
+                    'day' => $label,
+                    'views' => $views_cnt,
+                    'uniques' => $uniques_cnt
+                ];
+            }
+        }
+    }
+
     // POST Actions
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $action = $_POST['action'];
@@ -969,6 +1017,14 @@ if ($is_logged_in) {
             align-items: center;
             gap: 8px;
         }
+        /* Analytics CSS */
+        .chart-bar-container:hover .chart-tooltip {
+            opacity: 1 !important;
+        }
+        .chart-bar-container:hover .chart-bar-fill {
+            filter: brightness(1.2);
+            box-shadow: 0 0 12px rgba(212, 163, 115, 0.4);
+        }
     </style>
     <script>
         function togglePasswordVisibility() {
@@ -1122,6 +1178,80 @@ if ($is_logged_in) {
         <?php if (!empty($message)): ?>
             <div class="alert alert-<?php echo $message_type; ?>"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
+
+        <!-- Analytics Panel -->
+        <?php
+        // Find max views to scale the chart bars
+        $max_value = 1;
+        foreach ($analytics['chart_data'] as $c) {
+            if ($c['views'] > $max_value) {
+                $max_value = $c['views'];
+            }
+        }
+        ?>
+        <div class="glass-card" style="margin-bottom: 40px; padding: 30px;">
+            <div class="analytics-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                <h2 style="font-size: 20px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px; margin: 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Statistik Kunjungan Website (Real-time Analytics)
+                </h2>
+                <span style="font-size: 11px; background: rgba(44, 147, 92, 0.12); border: 1px solid rgba(44, 147, 92, 0.25); color: #8be1b0; padding: 5px 12px; border-radius: 100px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px;">
+                    <span style="width: 6px; height: 6px; background-color: #2c935c; border-radius: 50%; display: inline-block;"></span> Aktif
+                </span>
+            </div>
+            
+            <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
+                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Pengunjung Unik Hari Ini</span>
+                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['today_uniques']); ?></div>
+                    <span style="font-size: 11px; color: <?php echo ($analytics['today_uniques'] >= $analytics['yesterday_uniques']) ? '#8be1b0' : '#ff8b97'; ?>; display: block; margin-top: 4px; font-weight: 600;">
+                        <?php echo ($analytics['today_uniques'] >= $analytics['yesterday_uniques']) ? '▲' : '▼'; ?> Kemarin: <?php echo number_format($analytics['yesterday_uniques']); ?>
+                    </span>
+                </div>
+                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
+                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Tayangan Halaman Hari Ini</span>
+                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['today_views']); ?></div>
+                    <span style="font-size: 11px; color: var(--gray-400); display: block; margin-top: 4px;">Total klik pengunjung hari ini</span>
+                </div>
+                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
+                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Total Pengunjung Unik</span>
+                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['total_uniques']); ?></div>
+                    <span style="font-size: 11px; color: var(--gray-400); display: block; margin-top: 4px;">Semua perangkat unik terhitung</span>
+                </div>
+                <div class="stat-box" style="background: rgba(3, 7, 18, 0.3); border: 1px solid rgba(255,255,255,0.04); padding: 20px; border-radius: 14px;">
+                    <span style="font-size: 11px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Total Tayangan Halaman</span>
+                    <div style="font-size: 26px; font-weight: 800; color: #ffffff; margin-top: 6px;"><?php echo number_format($analytics['total_views']); ?></div>
+                    <span style="font-size: 11px; color: var(--gray-400); display: block; margin-top: 4px;">Akumulasi seluruh tayangan</span>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div style="background: rgba(3, 7, 18, 0.2); border: 1px solid rgba(255,255,255,0.03); padding: 24px; border-radius: 16px;">
+                <span style="font-size: 12px; color: var(--gray-400); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; display: block; margin-bottom: 24px;">Grafik Kunjungan Harian (7 Hari Terakhir)</span>
+                <div style="display: flex; align-items: flex-end; justify-content: space-between; height: 120px; padding: 0 10px; gap: 8px;">
+                    <?php foreach ($analytics['chart_data'] as $c): 
+                        $height_percent = round(($c['views'] / $max_value) * 100);
+                        $height_percent = max($height_percent, 8); // Minimum height for visibility
+                    ?>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%;">
+                            <div style="width: 100%; display: flex; align-items: flex-end; justify-content: center; height: 80px; position: relative;" class="chart-bar-container">
+                                <!-- Tooltip on hover -->
+                                <span style="position: absolute; bottom: calc(<?php echo $height_percent; ?>% + 6px); background: #111827; border: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 10px; padding: 4px 8px; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 0.2s; white-space: nowrap; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5);" class="chart-tooltip">
+                                    <?php echo $c['views']; ?> Views / <?php echo $c['uniques']; ?> Users
+                                </span>
+                                
+                                <div style="width: 24px; height: <?php echo $height_percent; ?>%; background: linear-gradient(to top, rgba(212, 163, 115, 0.35) 0%, var(--gold-400) 100%); border-radius: 6px 6px 0 0; transition: all 0.3s;" class="chart-bar-fill"></div>
+                            </div>
+                            <span style="font-size: 11px; color: var(--gray-400); margin-top: 10px; display: block;"><?php echo $c['day']; ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
 
         <!-- Dashboard Grid -->
         <div class="dashboard-grid">

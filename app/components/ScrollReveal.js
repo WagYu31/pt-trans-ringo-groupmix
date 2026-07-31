@@ -4,7 +4,11 @@ import { useEffect } from 'react';
 
 export default function ScrollReveal() {
   useEffect(() => {
+    // Send visit log to server-side analytics
+    fetch('/admin/tracker.php').catch((err) => console.log('Tracker error:', err));
+
     if (typeof window === 'undefined' || !window.IntersectionObserver) return;
+
 
     const observerOptions = {
       root: null,
