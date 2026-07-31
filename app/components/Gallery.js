@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import Image from 'next/image';
 
 const galleryImages = [
   { id: 'v1', src: '/images/gallery/video-activity-1.jpg', videoSrc: '/videos/activity-1.mp4', type: 'video', category: 'kegiatan', title: 'Aktivitas Harian Loader', desc: 'Pengisian material alam agregat ke hopper batching plant menggunakan wheel loader.' },
@@ -33,7 +32,7 @@ export default function Gallery() {
   const sliderRef = useRef(null);
 
   useEffect(() => {
-    fetch('/data/gallery.json')
+    fetch('/data/gallery.json?t=' + Date.now())
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error('Failed to load live data');
@@ -162,12 +161,11 @@ export default function Gallery() {
                       style={{ objectFit: 'cover', width: '100%', height: '100%', display: 'block' }}
                     />
                   ) : (
-                    <Image
+                    <img
                       src={img.src}
                       alt={img.title}
-                      width={400}
-                      height={300}
-                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                      loading="lazy"
+                      style={{ objectFit: 'cover', width: '100%', height: '100%', display: 'block' }}
                     />
                   )}
                   <div className="gallery-hover-overlay">
