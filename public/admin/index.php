@@ -9,16 +9,21 @@ $json_file = '../data/gallery.json';
 $image_upload_dir = '../images/gallery/';
 $video_upload_dir = '../videos/';
 
-// Ensure directories exist
+// Ensure directories exist with public access permissions
 if (!is_dir(dirname($json_file))) {
     mkdir(dirname($json_file), 0755, true);
 }
+@chmod(dirname($json_file), 0755);
+
 if (!is_dir($image_upload_dir)) {
     mkdir($image_upload_dir, 0755, true);
 }
+@chmod($image_upload_dir, 0755);
+
 if (!is_dir($video_upload_dir)) {
     mkdir($video_upload_dir, 0755, true);
 }
+@chmod($video_upload_dir, 0755);
 
 // Authentication Handlers
 if (isset($_POST['login'])) {
@@ -53,6 +58,7 @@ function read_gallery($file) {
 // Write JSON Data Helper
 function write_gallery($file, $data) {
     file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    @chmod($file, 0644);
 }
 
 // Action Handlers
@@ -141,6 +147,7 @@ if ($is_logged_in) {
                     $filename = 'uploaded_' . time() . '_' . rand(100, 999) . '.' . $ext;
                     $dest = $image_upload_dir . $filename;
                     if (move_uploaded_file($_FILES['image_file']['tmp_name'], $dest)) {
+                        @chmod($dest, 0644);
                         $new_item['src'] = '/images/gallery/' . $filename;
                     } else {
                         $upload_ok = false;
@@ -164,6 +171,7 @@ if ($is_logged_in) {
                         $filename = 'uploaded_' . time() . '_' . rand(100, 999) . '.' . $ext;
                         $dest = $video_upload_dir . $filename;
                         if (move_uploaded_file($_FILES['video_file']['tmp_name'], $dest)) {
+                            @chmod($dest, 0644);
                             $new_item['videoSrc'] = '/videos/' . $filename;
                         } else {
                             $upload_ok = false;

@@ -80,5 +80,6 @@ if (count($data['days']) > 30) {
 
 // Save back to file
 file_put_contents($visitors_file, json_encode($data, JSON_PRETTY_PRINT));
+@chmod($visitors_file, 0644);
 
 echo json_encode(['status' => 'success']);
