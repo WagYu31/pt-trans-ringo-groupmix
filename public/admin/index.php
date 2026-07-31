@@ -308,7 +308,7 @@ if ($is_logged_in) {
             inset: 0;
             background-size: cover;
             background-position: center;
-            filter: brightness(0.65) contrast(1.1);
+            filter: brightness(0.9) contrast(1.05); /* Lighter and clearer */
             transform: scale(1.02);
             transition: transform 15s ease;
         }
@@ -320,21 +320,20 @@ if ($is_logged_in) {
         .login-cover-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(10, 17, 40, 0.9) 0%, rgba(3, 7, 18, 0.95) 100%);
-            mix-blend-mode: multiply;
+            background: linear-gradient(135deg, rgba(10, 17, 40, 0.5) 0%, rgba(3, 7, 18, 0.75) 100%);
         }
 
         .login-cover-content {
             position: relative;
             z-index: 2;
             max-width: 550px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 17, 40, 0.82); /* Darker glass background for white text readability */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 40px;
             border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             text-align: left;
         }
 
@@ -414,13 +413,13 @@ if ($is_logged_in) {
         }
 
         .brand-logo-container {
-            width: 90px;
-            height: 90px;
+            width: 160px;
+            height: 60px;
             margin: 0 auto 24px auto;
-            border-radius: 22px;
+            border-radius: 12px;
             padding: 3px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #000000; /* Flat black background to seamlessly match the logo background */
+            border: 1px solid rgba(255, 255, 255, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -431,8 +430,8 @@ if ($is_logged_in) {
         .brand-logo-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 18px;
+            object-fit: contain; /* Shrinks full logo to fit inside instead of cutting off */
+            border-radius: 8px;
         }
 
         .brand-title {
