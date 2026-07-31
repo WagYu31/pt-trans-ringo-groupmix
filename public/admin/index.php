@@ -636,13 +636,22 @@ if ($is_logged_in) {
         }
 
         .header-title-section h1 {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
         }
+        
+        .header-title-section h1 span.gradient-text {
+            background: linear-gradient(135deg, var(--red-500) 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
         .header-title-section p {
             color: var(--gray-400);
             font-size: 14px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         /* Dashboard Grid Layout */
@@ -652,40 +661,112 @@ if ($is_logged_in) {
             gap: 40px;
         }
 
-        @media (min-width: 900px) {
+        @media (min-width: 992px) {
             .dashboard-grid {
-                grid-template-columns: 1fr 2fr;
+                grid-template-columns: 380px 1fr;
             }
         }
 
         .form-select {
             width: 100%;
             padding: 12px 16px;
-            background: rgba(10, 17, 40, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 16px;
+            background: rgba(3, 7, 18, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 15px;
             outline: none;
             cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 40px;
         }
 
         .form-select option {
-            background: var(--navy-800);
-            color: var(--text-light);
+            background: #111827;
+            color: #ffffff;
         }
 
         .form-textarea {
             width: 100%;
             height: 100px;
             padding: 12px 16px;
-            background: rgba(10, 17, 40, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 16px;
+            background: rgba(3, 7, 18, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 15px;
             outline: none;
             resize: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus, .form-textarea:focus {
+            border-color: var(--gold-500);
+            background: rgba(3, 7, 18, 0.8);
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.12), inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Beautiful Custom Upload Zone */
+        .file-upload-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .file-upload-input {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .file-upload-label-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            background: rgba(3, 7, 18, 0.4);
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label-zone svg {
+            color: #6b7280;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+
+        .file-upload-wrapper:hover .file-upload-label-zone {
+            border-color: var(--gold-500);
+            background: rgba(212, 163, 115, 0.05);
+        }
+
+        .file-upload-wrapper:hover .file-upload-label-zone svg {
+            color: var(--gold-500);
+        }
+
+        .upload-zone-text {
+            font-size: 14px;
+            color: #d1d5db;
+            margin-bottom: 4px;
+            transition: color 0.3s;
+        }
+
+        .upload-zone-sub {
+            font-size: 11px;
+            color: #6b7280;
         }
 
         /* List Items Styling */
@@ -693,13 +774,13 @@ if ($is_logged_in) {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .items-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 24px;
         }
 
         @media (min-width: 600px) {
@@ -708,53 +789,101 @@ if ($is_logged_in) {
             }
         }
 
+        @media (min-width: 1400px) {
+            .items-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
         .item-card {
-            background: rgba(16, 31, 66, 0.6);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
+            background: rgba(17, 24, 39, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .item-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 163, 115, 0.25);
+            box-shadow: 0 15px 35px rgba(212, 163, 115, 0.08), 0 20px 40px rgba(0, 0, 0, 0.35);
         }
 
         .item-preview {
             width: 100%;
-            height: 160px;
+            height: 170px;
             position: relative;
             background: #000;
+            overflow: hidden;
         }
 
         .item-preview img, .item-preview video {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .item-card:hover .item-preview img, .item-card:hover .item-preview video {
+            transform: scale(1.05);
         }
 
         .item-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--gold-500);
-            color: var(--navy-900);
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 10px;
+            top: 12px;
+            left: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 5px 12px;
             border-radius: 100px;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 3;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            background: rgba(31, 41, 55, 0.7); /* Default */
+        }
+        
+        /* Category-specific styling */
+        .item-badge.badge-produksi {
+            background: rgba(44, 147, 92, 0.75);
+            border-color: rgba(44, 147, 92, 0.4);
+        }
+        .item-badge.badge-armada {
+            background: rgba(32, 109, 181, 0.75);
+            border-color: rgba(32, 109, 181, 0.4);
+        }
+        .item-badge.badge-proyek {
+            background: rgba(212, 163, 115, 0.75);
+            border-color: rgba(212, 163, 115, 0.4);
+        }
+        .item-badge.badge-kegiatan {
+            background: rgba(124, 58, 237, 0.75);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+        .item-badge.badge-alat_berat {
+            background: rgba(219, 86, 101, 0.75);
+            border-color: rgba(219, 86, 101, 0.4);
         }
 
         .item-info {
-            padding: 16px;
+            padding: 20px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
 
         .item-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 6px;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -763,12 +892,12 @@ if ($is_logged_in) {
         .item-desc {
             font-size: 13px;
             color: var(--gray-400);
-            line-height: 1.4;
+            line-height: 1.5;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             flex-grow: 1;
         }
 
@@ -776,51 +905,59 @@ if ($is_logged_in) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 14px;
             margin-top: auto;
         }
 
         .reorder-btns {
             display: flex;
-            gap: 6px;
+            gap: 8px;
         }
 
         .btn-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-light);
-            font-size: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #9ca3af;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-icon:hover {
-            background: rgba(255,255,255,0.15);
+            background: rgba(212, 163, 115, 0.15);
+            border-color: rgba(212, 163, 115, 0.25);
             color: var(--gold-400);
+            transform: translateY(-1px);
+        }
+
+        .btn-icon:active {
+            transform: translateY(0);
         }
 
         .btn-trash {
-            background: rgba(219, 86, 101, 0.15);
-            border-color: rgba(219, 86, 101, 0.2);
+            background: rgba(219, 86, 101, 0.12);
+            border-color: rgba(219, 86, 101, 0.15);
             color: #ff8b97;
         }
 
         .btn-trash:hover {
             background: var(--red-500);
-            color: var(--text-light);
+            border-color: var(--red-500);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(219, 86, 101, 0.3);
         }
 
         .upload-helper-text {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gray-400);
             margin-top: 6px;
+            line-height: 1.4;
         }
 
         /* Collapsible Form on Mobile */
@@ -863,6 +1000,23 @@ if ($is_logged_in) {
                 videoField.style.display = 'none';
                 document.getElementById('video_file').required = false;
                 imgLabel.innerText = "Unggah File Gambar (JPG/PNG/WEBP)";
+            }
+        }
+
+        function updateFileName(input, targetId) {
+            var fileNameSpan = document.getElementById(targetId);
+            if (input.files && input.files[0]) {
+                fileNameSpan.innerText = input.files[0].name;
+                fileNameSpan.style.color = '#ffffff';
+                fileNameSpan.style.fontWeight = 'bold';
+            } else {
+                if (targetId === 'image-file-name') {
+                    fileNameSpan.innerText = "Pilih File Gambar";
+                } else {
+                    fileNameSpan.innerText = "Pilih File Video";
+                }
+                fileNameSpan.style.color = '#9ca3af';
+                fileNameSpan.style.fontWeight = 'normal';
             }
         }
     </script>
@@ -952,10 +1106,17 @@ if ($is_logged_in) {
         <!-- Header -->
         <div class="header">
             <div class="header-title-section">
-                <h1>Dashboard Galeri TRGMIX</h1>
+                <h1>Dashboard Galeri <span class="gradient-text">TRGMIX</span></h1>
                 <p>Kelola konten foto, video, dan urutan slider halaman utama secara live.</p>
             </div>
-            <a href="index.php?logout=1" class="btn btn-secondary" style="width: auto;">Logout Portal 🚪</a>
+            <a href="index.php?logout=1" class="btn btn-secondary" style="width: auto; display: inline-flex; align-items: center; gap: 8px;">
+                <span>Logout Portal</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </a>
         </div>
 
         <?php if (!empty($message)): ?>
@@ -967,7 +1128,7 @@ if ($is_logged_in) {
             
             <!-- Left Side: Add Form -->
             <div class="glass-card" style="height: fit-content;">
-                <h2 class="form-section-title">➕ Tambah Konten Baru</h2>
+                <h2 class="form-section-title" style="margin-bottom: 24px; font-weight: 800; font-size: 20px; color: #ffffff;">➕ Tambah Konten</h2>
                 <form action="index.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="add">
                     
@@ -1002,17 +1163,42 @@ if ($is_logged_in) {
 
                     <div class="form-group">
                         <label class="form-label" id="img-upload-label" for="image_file">Unggah File Gambar (JPG/PNG/WEBP)</label>
-                        <input type="file" id="image_file" name="image_file" accept="image/*" required>
-                        <div class="upload-helper-text">Rekomendasi rasio gambar lanskap (4:3 atau 16:9).</div>
+                        <div class="file-upload-wrapper">
+                            <label for="image_file" class="file-upload-label-zone">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                <span class="upload-zone-text" id="image-file-name">Pilih File Gambar</span>
+                                <span class="upload-zone-sub">PNG, JPG atau WEBP (Maks. 10MB)</span>
+                            </label>
+                            <input type="file" id="image_file" name="image_file" accept="image/*" class="file-upload-input" onchange="updateFileName(this, 'image-file-name')" required>
+                        </div>
                     </div>
 
                     <div class="form-group" id="video-upload-field" style="display: none;">
                         <label class="form-label" for="video_file">Unggah File Video (MP4)</label>
-                        <input type="file" id="video_file" name="video_file" accept="video/mp4">
-                        <div class="upload-helper-text">Rekomendasi ukuran file video di bawah 20MB untuk loading cepat.</div>
+                        <div class="file-upload-wrapper">
+                            <label for="video_file" class="file-upload-label-zone">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                    <line x1="7" y1="2" x2="7" y2="22"></line>
+                                    <line x1="17" y1="2" x2="17" y2="22"></line>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <line x1="2" y1="7" x2="7" y2="7"></line>
+                                    <line x1="2" y1="17" x2="7" y2="17"></line>
+                                    <line x1="17" y1="17" x2="22" y2="17"></line>
+                                    <line x1="17" y1="7" x2="22" y2="7"></line>
+                                </svg>
+                                <span class="upload-zone-text" id="video-file-name">Pilih File Video</span>
+                                <span class="upload-zone-sub">Format MP4 (Maks. 20MB)</span>
+                            </label>
+                            <input type="file" id="video_file" name="video_file" accept="video/mp4" class="file-upload-input" onchange="updateFileName(this, 'video-file-name')">
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Simpan & Tayangkan</button>
+                    <button type="submit" class="btn-primary-glow" style="margin-top: 10px;">Simpan & Tayangkan ➔</button>
                 </form>
             </div>
 
@@ -1032,10 +1218,17 @@ if ($is_logged_in) {
                         <?php foreach ($gallery as $index => $item): ?>
                             <div class="item-card">
                                 <div class="item-preview">
-                                    <span class="item-badge"><?php echo htmlspecialchars($item['category']); ?></span>
+                                    <span class="item-badge badge-<?php echo str_replace(' ', '_', strtolower($item['category'])); ?>">
+                                        <?php echo htmlspecialchars($item['category']); ?>
+                                    </span>
                                     <?php if (isset($item['type']) && $item['type'] === 'video'): ?>
                                         <video src="<?php echo htmlspecialchars($item['videoSrc']); ?>" muted playsinline></video>
-                                        <span style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; pointer-events: none;">▶ VIDEO</span>
+                                        <span style="position: absolute; bottom: 12px; right: 12px; background: rgba(3, 7, 18, 0.75); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; pointer-events: none; display: flex; align-items: center; gap: 4px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                            VIDEO
+                                        </span>
                                     <?php else: ?>
                                         <img src="<?php echo htmlspecialchars($item['src']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
                                     <?php endif; ?>
@@ -1051,13 +1244,21 @@ if ($is_logged_in) {
                                                 <input type="hidden" name="action" value="move">
                                                 <input type="hidden" name="direction" value="up">
                                                 <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-                                                <button type="submit" class="btn-icon" title="Geser Kiri / Atas" <?php echo ($index === 0) ? 'disabled style="opacity: 0.3; cursor: default;"' : ''; ?>>▲</button>
+                                                <button type="submit" class="btn-icon" title="Geser ke Atas" <?php echo ($index === 0) ? 'disabled style="opacity: 0.25; cursor: default; pointer-events: none;"' : ''; ?>>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="18 15 12 9 6 15"></polyline>
+                                                    </svg>
+                                                </button>
                                             </form>
                                             <form action="index.php" method="POST" style="display:inline;">
                                                 <input type="hidden" name="action" value="move">
                                                 <input type="hidden" name="direction" value="down">
                                                 <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-                                                <button type="submit" class="btn-icon" title="Geser Kanan / Bawah" <?php echo ($index === count($gallery) - 1) ? 'disabled style="opacity: 0.3; cursor: default;"' : ''; ?>>▼</button>
+                                                <button type="submit" class="btn-icon" title="Geser ke Bawah" <?php echo ($index === count($gallery) - 1) ? 'disabled style="opacity: 0.25; cursor: default; pointer-events: none;"' : ''; ?>>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                                    </svg>
+                                                </button>
                                             </form>
                                         </div>
 
@@ -1065,7 +1266,14 @@ if ($is_logged_in) {
                                         <form action="index.php" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokumentasi ini? File di disk server juga akan ikut dihapus permanen.');">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-                                            <button type="submit" class="btn-icon btn-trash" title="Hapus Permanen">🗑️</button>
+                                            <button type="submit" class="btn-icon btn-trash" title="Hapus Permanen">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                </svg>
+                                            </button>
                                         </form>
                                     </div>
                                 </div>
