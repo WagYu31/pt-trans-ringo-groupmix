@@ -72,6 +72,17 @@ if ($is_logged_in) {
         'chart_data' => []
     ];
 
+    // Pre-populate the last 7 days with default zero values
+    for ($i = 6; $i >= 0; $i--) {
+        $day_str = date('Y-m-d', strtotime("-$i days"));
+        $label = date('d M', strtotime($day_str));
+        $analytics['chart_data'][$day_str] = [
+            'day' => $label,
+            'views' => 0,
+            'uniques' => 0
+        ];
+    }
+
     if (file_exists($visitors_file)) {
         $v_content = file_get_contents($visitors_file);
         $v_decoded = json_decode($v_content, true);
@@ -90,21 +101,12 @@ if ($is_logged_in) {
                 $analytics['yesterday_uniques'] = $v_decoded['days'][$yesterday_str]['uniques'] ?? 0;
             }
             
-            // Prepare last 7 days chart data
-            for ($i = 6; $i >= 0; $i--) {
-                $day_str = date('Y-m-d', strtotime("-$i days"));
-                $label = date('d M', strtotime($day_str));
-                $views_cnt = 0;
-                $uniques_cnt = 0;
-                if (isset($v_decoded['days'][$day_str])) {
-                    $views_cnt = $v_decoded['days'][$day_str]['views'] ?? 0;
-                    $uniques_cnt = $v_decoded['days'][$day_str]['uniques'] ?? 0;
+            // Overwrite views/uniques from actual data
+            foreach ($analytics['chart_data'] as $day_key => $chart_item) {
+                if (isset($v_decoded['days'][$day_key])) {
+                    $analytics['chart_data'][$day_key]['views'] = $v_decoded['days'][$day_key]['views'] ?? 0;
+                    $analytics['chart_data'][$day_key]['uniques'] = $v_decoded['days'][$day_key]['uniques'] ?? 0;
                 }
-                $analytics['chart_data'][] = [
-                    'day' => $label,
-                    'views' => $views_cnt,
-                    'uniques' => $uniques_cnt
-                ];
             }
         }
     }
