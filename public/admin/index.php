@@ -278,19 +278,108 @@ if ($is_logged_in) {
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
-        /* Login Layout */
-        .login-wrapper {
+        /* Split Login Layout */
+        .login-wrapper-split {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .login-cover {
+            display: none;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            padding: 60px;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        @media (min-width: 900px) {
+            .login-cover {
+                display: flex;
+            }
+        }
+
+        .login-cover-img {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.05);
+            transition: transform 10s ease;
+        }
+
+        .login-cover:hover .login-cover-img {
+            transform: scale(1);
+        }
+
+        .login-cover-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 17, 40, 0.95) 20%, rgba(10, 17, 40, 0.4) 100%);
+        }
+
+        .login-cover-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .brand-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gold-400);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .cover-heading {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: var(--text-light);
+        }
+
+        .cover-subheading {
+            font-size: 16px;
+            color: var(--gray-300);
+            line-height: 1.6;
+        }
+
+        .login-form-pane {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
+            padding: 40px 20px;
+            background-color: var(--navy-900);
+            position: relative;
         }
 
-        .login-card {
+        @media (min-width: 900px) {
+            .login-form-pane {
+                max-width: 500px;
+                background-color: rgba(16, 31, 66, 0.3);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-left: 1px solid rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        .login-card-inner {
             width: 100%;
-            max-width: 420px;
+            max-width: 380px;
             text-align: center;
+        }
+
+        .login-footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: var(--gray-400);
         }
 
         .brand-logo-container {
@@ -640,28 +729,44 @@ if ($is_logged_in) {
 
 <?php if (!$is_logged_in): ?>
     <!-- LOGIN VIEW -->
-    <div class="login-wrapper">
-        <div class="glass-card login-card">
-            <div class="brand-logo-container">
-                <img src="/images/logo.jpeg" alt="TRGMIX Logo">
+    <div class="login-wrapper-split">
+        <!-- Left Side: Cover Section -->
+        <div class="login-cover">
+            <div class="login-cover-img" style="background-image: url('/images/batching-plant.jpeg');"></div>
+            <div class="login-cover-overlay"></div>
+            <div class="login-cover-content">
+                <div class="brand-label">PT. TRANS RINGO GROUPMIX</div>
+                <h1 class="cover-heading">Portal Administrasi<br>Galeri Dokumentasi</h1>
+                <p class="cover-subheading">Kelola seluruh aset digital foto dan video kegiatan batching plant secara profesional dan terpusat.</p>
             </div>
-            <h2 class="brand-title">
-                <span class="red">TRG</span><span class="blue">MIX</span> Admin Portal
-            </h2>
-            <p style="color: var(--gray-400); font-size: 14px; margin-bottom: 24px;">Silakan masukkan password untuk mengelola galeri.</p>
-
-            <?php if (isset($error)): ?>
-                <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-            <?php endif; ?>
-
-            <form action="index.php" method="POST">
-                <input type="hidden" name="login" value="1">
-                <div class="form-group">
-                    <label class="form-label" for="password">Password Portal</label>
-                    <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" required autofocus>
+        </div>
+        <!-- Right Side: Form Section -->
+        <div class="login-form-pane">
+            <div class="login-card-inner">
+                <div class="brand-logo-container">
+                    <img src="/images/logo.jpeg" alt="TRGMIX Logo">
                 </div>
-                <button type="submit" class="btn btn-primary">Masuk Dashboard</button>
-            </form>
+                <h2 class="brand-title">
+                    <span class="red">TRG</span><span class="blue">MIX</span> Admin Portal
+                </h2>
+                <p style="color: var(--gray-400); font-size: 14px; margin-bottom: 24px;">Silakan masukkan password untuk mengelola galeri.</p>
+
+                <?php if (isset($error)): ?>
+                    <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
+                <?php endif; ?>
+
+                <form action="index.php" method="POST">
+                    <input type="hidden" name="login" value="1">
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password Portal</label>
+                        <input class="form-input" type="password" id="password" name="password" placeholder="••••••••" required autofocus>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Masuk Dashboard →</button>
+                </form>
+                <div class="login-footer">
+                    &copy; <?php echo date('Y'); ?> PT. Trans Ringo Groupmix. All Rights Reserved.
+                </div>
+            </div>
         </div>
     </div>
 <?php else: ?>
